@@ -166,9 +166,6 @@
         <el-form-item label="封面图" prop="coverImg">
           <image-upload v-model="form.coverImg"/>
         </el-form-item>
-        <el-form-item label="收藏数量" prop="counts">
-          <el-input v-model="form.counts" placeholder="请输入收藏数量" />
-        </el-form-item>
         <el-form-item label="发布时间" prop="releaseTime">
           <el-date-picker clearable
             v-model="form.releaseTime"
@@ -183,8 +180,8 @@
         <el-form-item label="路线花费" prop="cost">
           <el-input v-model="form.cost" placeholder="请输入路线花费" />
         </el-form-item>
-        <el-form-item label="简介" prop="introduction">
-          <el-input v-model="form.introduction" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="简介">
+          <editor v-model="form.introduction" :min-height="192"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

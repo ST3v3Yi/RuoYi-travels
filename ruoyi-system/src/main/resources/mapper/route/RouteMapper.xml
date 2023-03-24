@@ -19,12 +19,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
         <result property="introduction"    column="introduction"    />
+        <result property="content"    column="content"    />
         <result property="status"    column="status"    />
         <result property="isDeleted"    column="is_deleted"    />
     </resultMap>
 
     <sql id="selectRouteVo">
-        select id, title, cover_img, counts, release_time, day, cost, user_id, user_name, dept_id, dept_name, create_time, update_time, introduction, status, is_deleted from tb_route
+        select id, title, cover_img, counts, release_time, day, cost, user_id, user_name, dept_id, dept_name, create_time, update_time, introduction, content, status, is_deleted from tb_route
     </sql>
 
     <select id="selectRouteList" parameterType="Route" resultMap="RouteResult">
@@ -59,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="introduction != null">introduction,</if>
+            <if test="content != null">content,</if>
             <if test="status != null">status,</if>
             <if test="isDeleted != null">is_deleted,</if>
          </trim>
@@ -76,6 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="introduction != null">#{introduction},</if>
+            <if test="content != null">#{content},</if>
             <if test="status != null">#{status},</if>
             <if test="isDeleted != null">#{isDeleted},</if>
          </trim>
@@ -97,6 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="content != null">content = #{content},</if>
             <if test="status != null">status = #{status},</if>
             <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
         </trim>

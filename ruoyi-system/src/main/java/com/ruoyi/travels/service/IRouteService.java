@@ -7,7 +7,7 @@ import com.ruoyi.travels.domain.Route;
  * 路线Service接口
  * 
  * @author Yifun
- * @date 2023-03-09
+ * @date 2023-03-11
  */
 public interface IRouteService 
 {

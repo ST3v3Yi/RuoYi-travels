@@ -12,7 +12,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 路线对象 tb_route
  * 
  * @author Yifun
- * @date 2023-03-09
+ * @date 2023-03-11
  */
 public class Route extends BaseEntity
 {
@@ -62,6 +62,9 @@ public class Route extends BaseEntity
     /** 简介 */
     @Excel(name = "简介")
     private String introduction;
+
+    /** 内容 */
+    private String content;
 
     /** 状态 */
     private Integer status;
@@ -187,6 +190,15 @@ public class Route extends BaseEntity
     {
         return status;
     }
+    public void setContent(String content)
+    {
+        this.content = content;
+    }
+
+    public String getContent()
+    {
+        return content;
+    }
     public void setIsDeleted(Integer isDeleted) 
     {
         this.isDeleted = isDeleted;
@@ -214,6 +226,7 @@ public class Route extends BaseEntity
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())
             .append("introduction", getIntroduction())
+            .append("content", getContent())
             .append("status", getStatus())
             .append("isDeleted", getIsDeleted())
             .toString();
