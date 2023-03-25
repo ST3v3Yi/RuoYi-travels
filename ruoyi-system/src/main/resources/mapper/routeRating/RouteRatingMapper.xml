@@ -27,6 +27,12 @@
         where route_id = #{routeId}
     </select>
 
+    <select id="selectAVGRatingByRouteId" parameterType="Long" resultType="java.math.BigDecimal">
+        select AVG(rating) as rating
+        from tb_route_rating
+        where route_id = #{routeId}
+    </select>
+
     <insert id="insertRouteRating" parameterType="RouteRating">
         insert into tb_route_rating
         <trim prefix="(" suffix=")" suffixOverrides=",">

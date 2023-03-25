@@ -70,6 +70,17 @@ public class RouteRatingController extends BaseController
     }
 
     /**
+     * 查询路线平均分
+     * @return
+     */
+    @PreAuthorize("@ss.hasPermi('routeRating:routeRating:query')")
+    @GetMapping(value = "/avg/{routeId}")
+    public AjaxResult getAVGRating(@PathVariable("routeId") Long routeId)
+    {
+        return success(routeRatingService.selectAVGRatingByRouteId(routeId));
+    }
+
+    /**
      * 新增路线评分
      */
     @PreAuthorize("@ss.hasPermi('routeRating:routeRating:add')")

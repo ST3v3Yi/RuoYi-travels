@@ -1,5 +1,6 @@
 package com.ruoyi.travels.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,16 @@ public class RouteRatingServiceImpl implements IRouteRatingService
     public RouteRating selectRouteRatingByRouteId(Long routeId)
     {
         return routeRatingMapper.selectRouteRatingByRouteId(routeId);
+    }
+
+    /**
+     *
+     * 查询路线平均分
+     */
+    @Override
+    public BigDecimal selectAVGRatingByRouteId(Long routeId)
+    {
+        return routeRatingMapper.selectAVGRatingByRouteId(routeId);
     }
 
     /**

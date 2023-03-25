@@ -1,5 +1,6 @@
 package com.ruoyi.travels.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import com.ruoyi.travels.domain.RouteRating;
 
@@ -18,6 +19,12 @@ public interface IRouteRatingService
      * @return 路线评分
      */
     public RouteRating selectRouteRatingByRouteId(Long routeId);
+
+    /**
+     *
+     * 查询路线平均分
+     */
+    public BigDecimal selectAVGRatingByRouteId(Long routeId);
 
     /**
      * 查询路线评分列表
