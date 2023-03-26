@@ -70,6 +70,16 @@ public class RouteCommentsController extends BaseController
     }
 
     /**
+     * 查询指定路线的评论列表
+     */
+    @PreAuthorize("@ss.hasPermi('routeComments:routeComments:list')")
+    @GetMapping("/list/{routeId}")
+    public AjaxResult getList(@PathVariable("routeId") Long routeId)
+    {
+        return success(routeCommentsService.selectRouteCommentsListByRouteId(routeId));
+    }
+
+    /**
      * 新增路线评论
      */
     @PreAuthorize("@ss.hasPermi('routeComments:routeComments:add')")

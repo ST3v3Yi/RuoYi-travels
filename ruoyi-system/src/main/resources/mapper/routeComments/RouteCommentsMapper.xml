@@ -12,6 +12,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
     </resultMap>
 
+    <resultMap id="RouteCommentsListResult" type="RouteCommentsList">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="routeId"    column="route_id"    />
+        <result property="content"    column="content"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="nickName"    column="nick_name"    />
+        <result property="avatar"    column="avatar"    />
+    </resultMap>
+
     <sql id="selectRouteCommentsVo">
         select id, user_id, route_id, content, create_time from tb_route_comments
     </sql>
@@ -24,6 +34,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="content != null  and content != ''"> and content = #{content}</if>
             <if test="createTime != null "> and create_time = #{createTime}</if>
         </where>
+    </select>
+
+    <select id="selectRouteCommentsListByRouteId" parameterType="Long" resultMap="RouteCommentsListResult">
+        select id, tb_route_comments.user_id, route_id, content, tb_route_comments.create_time, nick_name, avatar
+        from tb_route_comments, sys_user
+        where tb_route_comments.user_id = sys_user.user_id and route_id = #{routeId}
+        ORDER BY id ASC
     </select>
     
     <select id="selectRouteCommentsById" parameterType="Long" resultMap="RouteCommentsResult">

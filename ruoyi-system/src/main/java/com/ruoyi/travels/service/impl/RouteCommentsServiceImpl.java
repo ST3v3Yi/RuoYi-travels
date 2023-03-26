@@ -45,6 +45,15 @@ public class RouteCommentsServiceImpl implements IRouteCommentsService
     }
 
     /**
+     * 获取指定路线的评论列表 List
+     *
+     */
+    public List<RouteComments> selectRouteCommentsListByRouteId(Long routeId)
+    {
+        return routeCommentsMapper.selectRouteCommentsListByRouteId(routeId);
+    }
+
+    /**
      * 新增路线评论
      * 
      * @param routeComments 路线评论
