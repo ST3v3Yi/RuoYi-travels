@@ -2,6 +2,7 @@ package com.ruoyi.travels.mapper;
 
 import java.util.List;
 import com.ruoyi.travels.domain.RouteReply;
+import com.ruoyi.travels.domain.RouteReplyList;
 
 /**
  * 路线回复Mapper接口
@@ -18,6 +19,11 @@ public interface RouteReplyMapper
      * @return 路线回复
      */
     public RouteReply selectRouteReplyById(Long id);
+
+    /**
+     * 根据评论ID查询回复
+     */
+    public List<RouteReplyList> selectRouteReplyByCommentId(Long commentId);
 
     /**
      * 查询路线回复列表

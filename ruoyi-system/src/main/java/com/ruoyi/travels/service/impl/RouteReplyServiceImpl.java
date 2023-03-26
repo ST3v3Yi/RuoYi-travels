@@ -2,6 +2,7 @@ package com.ruoyi.travels.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.travels.domain.RouteReplyList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.travels.mapper.RouteReplyMapper;
@@ -30,6 +31,15 @@ public class RouteReplyServiceImpl implements IRouteReplyService
     public RouteReply selectRouteReplyById(Long id)
     {
         return routeReplyMapper.selectRouteReplyById(id);
+    }
+
+    /**
+     * 根据评论ID查询回复
+     */
+    @Override
+    public List<RouteReplyList> selectRouteReplyByCommentId(Long commentId)
+    {
+        return routeReplyMapper.selectRouteReplyByCommentId(commentId);
     }
 
     /**

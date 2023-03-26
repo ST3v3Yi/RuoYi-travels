@@ -28,7 +28,7 @@
     </select>
 
     <select id="selectAVGRatingByRouteId" parameterType="Long" resultType="java.math.BigDecimal">
-        select AVG(rating) as rating
+        select ROUND(AVG(rating), 2) as rating
         from tb_route_rating
         where route_id = #{routeId}
     </select>

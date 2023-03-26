@@ -70,6 +70,16 @@ public class RouteReplyController extends BaseController
     }
 
     /**
+     * 根据评论ID获取路线回复
+     */
+    @PreAuthorize("@ss.hasPermi('routeReply:routeReply:query')")
+    @GetMapping(value = "/list/{commentId}")
+    public AjaxResult getList(@PathVariable("commentId") Long commentId)
+    {
+        return success(routeReplyService.selectRouteReplyByCommentId(commentId));
+    }
+
+    /**
      * 新增路线回复
      */
     @PreAuthorize("@ss.hasPermi('routeReply:routeReply:add')")

@@ -14,6 +14,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
     </resultMap>
 
+    <resultMap id="RouteReplyList" type="RouteReplyList">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="routeId"    column="route_id"    />
+        <result property="commentId"    column="comment_id"    />
+        <result property="toUserId"    column="to_user_id"    />
+        <result property="content"    column="content"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="userName"    column="user_name"    />
+        <result property="toUserName"    column="to_user_name"    />
+        <result property="avatar"    column="avatar"    />
+    </resultMap>
+
     <sql id="selectRouteReplyVo">
         select id, user_id, route_id, comment_id, to_user_id, content, create_time from tb_route_reply
     </sql>
@@ -31,6 +44,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectRouteReplyById" parameterType="Long" resultMap="RouteReplyResult">
         <include refid="selectRouteReplyVo"/>
         where id = #{id}
+    </select>
+
+    <select id="selectRouteReplyByCommentId" parameterType="Long" resultMap="RouteReplyList">
+        SELECT id, tb_route_reply.user_id, route_id, comment_id, to_user_id, content, tb_route_reply.create_time,
+               (SELECT nick_name FROM sys_user WHERE sys_user.user_id = tb_route_reply.user_id) AS user_name,
+               (SELECT nick_name FROM sys_user WHERE sys_user.user_id = tb_route_reply.to_user_id) AS to_user_name,
+               (SELECT avatar FROM sys_user WHERE sys_user.user_id = tb_route_reply.user_id) AS avatar
+        FROM tb_route_reply
+        WHERE comment_id = #{commentId}
     </select>
         
     <insert id="insertRouteReply" parameterType="RouteReply">
