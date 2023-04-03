@@ -38,6 +38,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
         </where>
     </select>
+
+    <select id="selectRouteByDay" parameterType="Route" resultMap="RouteResult">
+        <include refid="selectRouteVo"/>
+        <if test="upper != null">
+            where day between #{lower} and #{upper}
+        </if>
+        <if test="upper == null">
+            where day &gt;= #{lower}
+        </if>
+    </select>
+
+    <select id="selectRouteByPrice" parameterType="Route" resultMap="RouteResult">
+        <include refid="selectRouteVo"/>
+        <if test="minPrice != null and maxPrice != null">
+            where cost between #{minPrice} and #{maxPrice}
+        </if>
+        <if test="maxPrice == null and minPrice != null">
+            where cost &gt;= #{minPrice}
+        </if>
+        <if test="minPrice == null and maxPrice != null">
+            where cost &lt;= #{maxPrice}
+        </if>
+    </select>
     
     <select id="selectRouteById" parameterType="Long" resultMap="RouteResult">
         <include refid="selectRouteVo"/>

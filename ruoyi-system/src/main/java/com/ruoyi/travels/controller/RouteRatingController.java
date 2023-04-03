@@ -81,6 +81,17 @@ public class RouteRatingController extends BaseController
     }
 
     /**
+     * 查询当前用户对该路线的评分
+     * @return
+     */
+    @PreAuthorize("@ss.hasPermi('routeRating:routeRating:query')")
+    @PostMapping(value = "/rating")
+    public AjaxResult getRating(@RequestBody RouteRating routeRating)
+    {
+        return success(routeRatingService.selectRating(routeRating));
+    }
+
+    /**
      * 新增路线评分
      */
     @PreAuthorize("@ss.hasPermi('routeRating:routeRating:add')")

@@ -27,6 +27,9 @@ public interface RouteFavoriteMapper
      */
     public List<RouteFavorite> selectRouteFavoriteList(RouteFavorite routeFavorite);
 
+    /** 获取用户是否收藏路线 */
+    public Boolean selectIsFavorite(RouteFavorite routeFavorite);
+
     /**
      * 新增路线收藏
      * 
@@ -58,4 +61,10 @@ public interface RouteFavoriteMapper
      * @return 结果
      */
     public int deleteRouteFavoriteByUserIds(Long[] userIds);
+
+    /**
+     * 删除路线收藏
+     *
+     */
+    public int deleteRouteFavorite(RouteFavorite routeFavorite);
 }

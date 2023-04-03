@@ -42,9 +42,26 @@ public class Route extends BaseEntity
     @Excel(name = "路线时间")
     private Integer day;
 
+    /** 路线时间下限 */
+    @Excel(name = "路线时间下限")
+    private Integer lower;
+
+    /** 路线时间上限 */
+    @Excel(name = "路线时间上限")
+    private Integer upper;
+
     /** 路线花费 */
     @Excel(name = "路线花费")
     private BigDecimal cost;
+
+    /** 路线花费下限 */
+    @Excel(name = "路线花费下限")
+    private BigDecimal minPrice;
+
+    /** 路线花费上限 */
+    @Excel(name = "路线花费上限")
+    private BigDecimal maxPrice;
+
 
     /** 创建人 */
     private Long userId;
@@ -127,6 +144,24 @@ public class Route extends BaseEntity
     {
         return day;
     }
+    public void setLower(Integer lower)
+    {
+        this.lower = lower;
+    }
+
+    public Integer getLower()
+    {
+        return lower;
+    }
+    public void setUpper(Integer upper)
+    {
+        this.upper = upper;
+    }
+
+    public Integer getUpper()
+    {
+        return upper;
+    }
     public void setCost(BigDecimal cost) 
     {
         this.cost = cost;
@@ -135,6 +170,24 @@ public class Route extends BaseEntity
     public BigDecimal getCost() 
     {
         return cost;
+    }
+    public void setMinPrice(BigDecimal minPrice)
+    {
+        this.minPrice = minPrice;
+    }
+
+    public BigDecimal getMinPrice()
+    {
+        return minPrice;
+    }
+    public void setMaxPrice(BigDecimal maxPrice)
+    {
+        this.maxPrice = maxPrice;
+    }
+
+    public BigDecimal getMaxPrice()
+    {
+        return maxPrice;
     }
     public void setUserId(Long userId) 
     {
@@ -218,7 +271,11 @@ public class Route extends BaseEntity
             .append("counts", getCounts())
             .append("releaseTime", getReleaseTime())
             .append("day", getDay())
+            .append("lower", getLower())
+            .append("upper", getUpper())
             .append("cost", getCost())
+            .append("minPrice", getMinPrice())
+            .append("maxPrice", getMaxPrice())
             .append("userId", getUserId())
             .append("userName", getUserName())
             .append("deptId", getDeptId())

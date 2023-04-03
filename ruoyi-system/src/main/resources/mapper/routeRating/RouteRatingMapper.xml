@@ -33,6 +33,10 @@
         where route_id = #{routeId}
     </select>
 
+    <select id="selectRating" parameterType="routeFavorite" resultType="java.math.BigDecimal">
+        select rating from tb_route_rating where user_id = #{userId} and route_id = #{routeId}
+    </select>
+
     <insert id="insertRouteRating" parameterType="RouteRating">
         insert into tb_route_rating
         <trim prefix="(" suffix=")" suffixOverrides=",">

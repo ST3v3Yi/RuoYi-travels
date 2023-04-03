@@ -4,14 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -20,6 +13,7 @@ import com.ruoyi.travels.domain.Route;
 import com.ruoyi.travels.service.IRouteService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 路线Controller
@@ -44,6 +38,26 @@ public class RouteController extends BaseController
         startPage();
         List<Route> list = routeService.selectRouteList(route);
         return getDataTable(list);
+    }
+
+    /**
+     * 获取相应天数限制内的列表
+     */
+    @PreAuthorize("@ss.hasPermi('route:route:list')")
+    @PostMapping("/listByDay")
+    public AjaxResult getListByDay(@RequestBody Route route)
+    {
+        return success(routeService.selectRouteByDay(route));
+    }
+
+    /**
+     * 获取相应花费限制内的列表
+     */
+    @PreAuthorize("@ss.hasPermi('route:route:list')")
+    @PostMapping("/listByPrice")
+    public AjaxResult getListByPrice(@RequestBody Route route)
+    {
+        return success(routeService.selectRouteByPrice(route));
     }
 
     /**
@@ -101,4 +115,16 @@ public class RouteController extends BaseController
     {
         return toAjax(routeService.deleteRouteByIds(ids));
     }
+
+    /**
+     * 上传路线封面图
+    @Log(title = "路线封面图", businessType = BusinessType.INSERT)
+    @PostMapping('/coverImg')
+    public AjaxResult uploadCoverImg(@RequestParam("coverImg") MultipartFile file) throws Exception
+    {
+        if (!file.isEmpty())
+        {
+
+        }
+    }*/
 }

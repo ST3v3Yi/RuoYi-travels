@@ -2,6 +2,7 @@ package com.ruoyi.travels.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.travels.mapper.RouteMapper;
@@ -42,6 +43,24 @@ public class RouteServiceImpl implements IRouteService
     public List<Route> selectRouteList(Route route)
     {
         return routeMapper.selectRouteList(route);
+    }
+
+    /**
+     * 获取相应天数限制内的列表
+     */
+    @Override
+    public List<Route> selectRouteByDay(Route route)
+    {
+        return routeMapper.selectRouteByDay(route);
+    }
+
+    /**
+     * 获取相应花费限制内的列表
+     */
+    @Override
+    public List<Route> selectRouteByPrice(Route route)
+    {
+        return routeMapper.selectRouteByPrice(route);
     }
 
     /**

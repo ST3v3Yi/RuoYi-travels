@@ -44,6 +44,13 @@ public class RouteFavoriteServiceImpl implements IRouteFavoriteService
         return routeFavoriteMapper.selectRouteFavoriteList(routeFavorite);
     }
 
+    /** 获取用户是否收藏路线 */
+    @Override
+    public Boolean selectIsFavorite(RouteFavorite routeFavorite)
+    {
+        return routeFavoriteMapper.selectIsFavorite(routeFavorite);
+    }
+
     /**
      * 新增路线收藏
      * 
@@ -91,5 +98,15 @@ public class RouteFavoriteServiceImpl implements IRouteFavoriteService
     public int deleteRouteFavoriteByUserId(Long userId)
     {
         return routeFavoriteMapper.deleteRouteFavoriteByUserId(userId);
+    }
+
+    /**
+     * 删除路线收藏信息
+     *
+     */
+    @Override
+    public int deleteRouteFavorite(RouteFavorite routeFavorite)
+    {
+        return routeFavoriteMapper.deleteRouteFavorite(routeFavorite);
     }
 }

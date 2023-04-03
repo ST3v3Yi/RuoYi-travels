@@ -28,6 +28,11 @@ public interface IRouteFavoriteService
     public List<RouteFavorite> selectRouteFavoriteList(RouteFavorite routeFavorite);
 
     /**
+     * 获取用户是否收藏路线
+     */
+    public Boolean selectIsFavorite(RouteFavorite routeFavorite);
+
+    /**
      * 新增路线收藏
      * 
      * @param routeFavorite 路线收藏
@@ -58,4 +63,10 @@ public interface IRouteFavoriteService
      * @return 结果
      */
     public int deleteRouteFavoriteByUserId(Long userId);
+
+    /**
+     * 删除路线收藏信息
+     *
+     */
+    public int deleteRouteFavorite(RouteFavorite routeFavorite);
 }

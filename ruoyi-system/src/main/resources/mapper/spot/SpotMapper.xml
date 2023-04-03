@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.travels.mapper.SpotMapper">
+    
+    <resultMap type="Spot" id="SpotResult">
+        <result property="id"    column="id"    />
+        <result property="spotName"    column="spot_name"    />
+        <result property="introduction"    column="introduction"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="playtime"    column="playtime"    />
+        <result property="traffic"    column="traffic"    />
+        <result property="tickets"    column="tickets"    />
+        <result property="openingHours"    column="opening_hours"    />
+        <result property="location"    column="location"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectSpotVo">
+        select id, spot_name, introduction, telephone, playtime, traffic, tickets, opening_hours, location, create_time, is_deleted from tb_spot
+    </sql>
+
+    <select id="selectSpotList" parameterType="Spot" resultMap="SpotResult">
+        <include refid="selectSpotVo"/>
+        <where>  
+            <if test="spotName != null  and spotName != ''"> and spot_name like concat('%', #{spotName}, '%')</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectSpotById" parameterType="Long" resultMap="SpotResult">
+        <include refid="selectSpotVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSpot" parameterType="Spot" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_spot
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spotName != null">spot_name,</if>
+            <if test="introduction != null">introduction,</if>
+            <if test="telephone != null">telephone,</if>
+            <if test="playtime != null">playtime,</if>
+            <if test="traffic != null">traffic,</if>
+            <if test="tickets != null">tickets,</if>
+            <if test="openingHours != null">opening_hours,</if>
+            <if test="location != null">location,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spotName != null">#{spotName},</if>
+            <if test="introduction != null">#{introduction},</if>
+            <if test="telephone != null">#{telephone},</if>
+            <if test="playtime != null">#{playtime},</if>
+            <if test="traffic != null">#{traffic},</if>
+            <if test="tickets != null">#{tickets},</if>
+            <if test="openingHours != null">#{openingHours},</if>
+            <if test="location != null">#{location},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSpot" parameterType="Spot">
+        update tb_spot
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spotName != null">spot_name = #{spotName},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
+            <if test="playtime != null">playtime = #{playtime},</if>
+            <if test="traffic != null">traffic = #{traffic},</if>
+            <if test="tickets != null">tickets = #{tickets},</if>
+            <if test="openingHours != null">opening_hours = #{openingHours},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSpotById" parameterType="Long">
+        delete from tb_spot where id = #{id}
+    </delete>
+
+    <delete id="deleteSpotByIds" parameterType="String">
+        delete from tb_spot where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

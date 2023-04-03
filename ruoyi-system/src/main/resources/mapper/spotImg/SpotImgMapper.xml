@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.travels.mapper.SpotImgMapper">
+    
+    <resultMap type="SpotImg" id="SpotImgResult">
+        <result property="id"    column="id"    />
+        <result property="imgId"    column="img_id"    />
+        <result property="spotId"    column="spot_id"    />
+        <result property="img"    column="img"    />
+    </resultMap>
+
+    <sql id="selectSpotImgVo">
+        select id, img_id, spot_id, img from tb_spot_img
+    </sql>
+
+    <select id="selectSpotImgList" parameterType="SpotImg" resultMap="SpotImgResult">
+        <include refid="selectSpotImgVo"/>
+        <where>  
+            <if test="imgId != null "> and img_id = #{imgId}</if>
+            <if test="spotId != null "> and spot_id = #{spotId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSpotImgById" parameterType="Long" resultMap="SpotImgResult">
+        <include refid="selectSpotImgVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSpotImg" parameterType="SpotImg" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_spot_img
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="imgId != null">img_id,</if>
+            <if test="spotId != null">spot_id,</if>
+            <if test="img != null">img,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="imgId != null">#{imgId},</if>
+            <if test="spotId != null">#{spotId},</if>
+            <if test="img != null">#{img},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSpotImg" parameterType="SpotImg">
+        update tb_spot_img
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="imgId != null">img_id = #{imgId},</if>
+            <if test="spotId != null">spot_id = #{spotId},</if>
+            <if test="img != null">img = #{img},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSpotImgById" parameterType="Long">
+        delete from tb_spot_img where id = #{id}
+    </delete>
+
+    <delete id="deleteSpotImgByIds" parameterType="String">
+        delete from tb_spot_img where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

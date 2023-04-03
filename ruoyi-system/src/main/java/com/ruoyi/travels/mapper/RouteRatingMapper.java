@@ -27,6 +27,11 @@ public interface RouteRatingMapper
     public BigDecimal selectAVGRatingByRouteId(Long routeId);
 
     /**
+     * 查询当前用户对该路线的评分
+     */
+    public BigDecimal selectRating(RouteRating routeRating);
+
+    /**
      * 查询路线评分列表
      *
      * @param routeRating 路线评分
