@@ -2,6 +2,10 @@ package com.ruoyi.travels.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.config.RuoYiConfig;
+import com.ruoyi.common.utils.file.FileUploadUtils;
+import com.ruoyi.common.utils.file.MimeTypeUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -118,13 +122,18 @@ public class RouteController extends BaseController
 
     /**
      * 上传路线封面图
+     */
     @Log(title = "路线封面图", businessType = BusinessType.INSERT)
-    @PostMapping('/coverImg')
+    @PostMapping("/upload")
     public AjaxResult uploadCoverImg(@RequestParam("coverImg") MultipartFile file) throws Exception
     {
         if (!file.isEmpty())
         {
-
+            String coverImg = FileUploadUtils.upload(RuoYiConfig.getImagePath(), file, MimeTypeUtils.IMAGE_EXTENSION);
+            AjaxResult ajax = AjaxResult.success();
+            ajax.put("imgUrl", coverImg);
+            return ajax;
         }
-    }*/
+        return error("上传图片异常，请联系管理员");
+    }
 }
