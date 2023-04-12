@@ -23,9 +23,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 景区Controller
- * 
+ *
  * @author Yifun
- * @date 2023-04-02
+ * @date 2023-04-11
  */
 @RestController
 @RequestMapping("/spot/spot")
@@ -96,7 +96,7 @@ public class SpotController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('spot:spot:remove')")
     @Log(title = "景区", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(spotService.deleteSpotByIds(ids));

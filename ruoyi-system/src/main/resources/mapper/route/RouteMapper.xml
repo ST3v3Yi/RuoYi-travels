@@ -39,6 +39,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="selectReleasedRouteList" resultMap="RouteResult">
+        <include refid="selectRouteVo"/>
+        <where>
+            is_deleted = 0
+        </where>
+    </select>
+
     <select id="selectRouteByDay" parameterType="Route" resultMap="RouteResult">
         <include refid="selectRouteVo"/>
         <if test="upper != null">

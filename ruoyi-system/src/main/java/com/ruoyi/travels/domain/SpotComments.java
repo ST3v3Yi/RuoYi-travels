@@ -8,9 +8,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 景区评分评论对象 tb_spot_comments
- * 
+ *
  * @author Yifun
- * @date 2023-04-02
+ * @date 2023-04-11
  */
 public class SpotComments extends BaseEntity
 {
@@ -35,61 +35,103 @@ public class SpotComments extends BaseEntity
     @Excel(name = "评分")
     private BigDecimal rating;
 
-    public void setId(Long id) 
+    /** 评论图片 */
+    @Excel(name = "评论图片")
+    private String img;
+
+    /** 用户昵称 */
+    @Excel(name = "用户昵称")
+    private String nickName;
+
+    /** 用户头像 */
+    @Excel(name = "用户头像")
+    private String avatar;
+
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setUserId(Long userId) 
+    public void setUserId(Long userId)
     {
         this.userId = userId;
     }
 
-    public Long getUserId() 
+    public Long getUserId()
     {
         return userId;
     }
-    public void setSpotId(Long spotId) 
+    public void setSpotId(Long spotId)
     {
         this.spotId = spotId;
     }
 
-    public Long getSpotId() 
+    public Long getSpotId()
     {
         return spotId;
     }
-    public void setContent(String content) 
+    public void setContent(String content)
     {
         this.content = content;
     }
 
-    public String getContent() 
+    public String getContent()
     {
         return content;
     }
-    public void setRating(BigDecimal rating) 
+    public void setRating(BigDecimal rating)
     {
         this.rating = rating;
     }
 
-    public BigDecimal getRating() 
+    public BigDecimal getRating()
     {
         return rating;
+    }
+    public void setImg(String img)
+    {
+        this.img = img;
+    }
+
+    public String getImg()
+    {
+        return img;
+    }
+    public void setNickName(String nickName)
+    {
+        this.nickName = nickName;
+    }
+
+    public String getNickName()
+    {
+        return nickName;
+    }
+    public void setAvatar(String avatar)
+    {
+        this.avatar = avatar;
+    }
+
+    public String getAvatar()
+    {
+        return avatar;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("userId", getUserId())
-            .append("spotId", getSpotId())
-            .append("content", getContent())
-            .append("rating", getRating())
-            .append("createTime", getCreateTime())
-            .toString();
+                .append("id", getId())
+                .append("userId", getUserId())
+                .append("spotId", getSpotId())
+                .append("content", getContent())
+                .append("rating", getRating())
+                .append("img", getImg())
+                .append("createTime", getCreateTime())
+                .append("nickName", getNickName())
+                .append("avatar", getAvatar())
+                .toString();
     }
 }

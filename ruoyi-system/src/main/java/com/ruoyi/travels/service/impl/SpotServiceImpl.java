@@ -10,19 +10,19 @@ import com.ruoyi.travels.service.ISpotService;
 
 /**
  * 景区Service业务层处理
- * 
+ *
  * @author Yifun
- * @date 2023-04-02
+ * @date 2023-04-11
  */
 @Service
-public class SpotServiceImpl implements ISpotService 
+public class SpotServiceImpl implements ISpotService
 {
     @Autowired
     private SpotMapper spotMapper;
 
     /**
      * 查询景区
-     * 
+     *
      * @param id 景区主键
      * @return 景区
      */
@@ -34,7 +34,7 @@ public class SpotServiceImpl implements ISpotService
 
     /**
      * 查询景区列表
-     * 
+     *
      * @param spot 景区
      * @return 景区
      */
@@ -46,7 +46,7 @@ public class SpotServiceImpl implements ISpotService
 
     /**
      * 新增景区
-     * 
+     *
      * @param spot 景区
      * @return 结果
      */
@@ -59,19 +59,20 @@ public class SpotServiceImpl implements ISpotService
 
     /**
      * 修改景区
-     * 
+     *
      * @param spot 景区
      * @return 结果
      */
     @Override
     public int updateSpot(Spot spot)
     {
+        spot.setUpdateTime(DateUtils.getNowDate());
         return spotMapper.updateSpot(spot);
     }
 
     /**
      * 批量删除景区
-     * 
+     *
      * @param ids 需要删除的景区主键
      * @return 结果
      */
@@ -83,7 +84,7 @@ public class SpotServiceImpl implements ISpotService
 
     /**
      * 删除景区信息
-     * 
+     *
      * @param id 景区主键
      * @return 结果
      */

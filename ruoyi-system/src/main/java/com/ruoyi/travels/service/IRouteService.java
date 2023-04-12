@@ -29,6 +29,13 @@ public interface IRouteService
     public List<Route> selectRouteList(Route route);
 
     /**
+     * 查询发布路线列表
+     *
+     * @return 路线集合
+     */
+    public List<Route> selectReleasedRouteList();
+
+    /**
      * 获取相应天数限制内的列表
      */
     public List<Route> selectRouteByDay(Route route);

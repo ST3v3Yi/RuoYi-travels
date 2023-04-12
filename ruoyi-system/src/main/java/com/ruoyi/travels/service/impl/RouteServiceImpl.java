@@ -46,6 +46,17 @@ public class RouteServiceImpl implements IRouteService
     }
 
     /**
+     * 查询发布路线列表
+     *
+     * @return 路线
+     */
+    @Override
+    public List<Route> selectReleasedRouteList()
+    {
+        return routeMapper.selectReleasedRouteList();
+    }
+
+    /**
      * 获取相应天数限制内的列表
      */
     @Override

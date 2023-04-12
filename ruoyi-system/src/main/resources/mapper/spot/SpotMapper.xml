@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.travels.mapper.SpotMapper">
-    
+
     <resultMap type="Spot" id="SpotResult">
         <result property="id"    column="id"    />
         <result property="spotName"    column="spot_name"    />
+        <result property="coverImg"    column="cover_img"    />
         <result property="introduction"    column="introduction"    />
         <result property="telephone"    column="telephone"    />
         <result property="playtime"    column="playtime"    />
@@ -14,31 +15,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="tickets"    column="tickets"    />
         <result property="openingHours"    column="opening_hours"    />
         <result property="location"    column="location"    />
+        <result property="spotImg"    column="spot_img"    />
+        <result property="lng"    column="lng"    />
+        <result property="lat"    column="lat"    />
         <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
         <result property="isDeleted"    column="is_deleted"    />
     </resultMap>
 
     <sql id="selectSpotVo">
-        select id, spot_name, introduction, telephone, playtime, traffic, tickets, opening_hours, location, create_time, is_deleted from tb_spot
+        select id, spot_name, cover_img, introduction, telephone, playtime, traffic, tickets, opening_hours, location, spot_img, lng, lat, create_time, update_time, is_deleted from tb_spot
     </sql>
 
     <select id="selectSpotList" parameterType="Spot" resultMap="SpotResult">
         <include refid="selectSpotVo"/>
-        <where>  
+        <where>
             <if test="spotName != null  and spotName != ''"> and spot_name like concat('%', #{spotName}, '%')</if>
             <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
         </where>
     </select>
-    
+
     <select id="selectSpotById" parameterType="Long" resultMap="SpotResult">
         <include refid="selectSpotVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertSpot" parameterType="Spot" useGeneratedKeys="true" keyProperty="id">
         insert into tb_spot
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="spotName != null">spot_name,</if>
+            <if test="spotName != null and spotName != ''">spot_name,</if>
+            <if test="coverImg != null">cover_img,</if>
             <if test="introduction != null">introduction,</if>
             <if test="telephone != null">telephone,</if>
             <if test="playtime != null">playtime,</if>
@@ -46,11 +52,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="tickets != null">tickets,</if>
             <if test="openingHours != null">opening_hours,</if>
             <if test="location != null">location,</if>
+            <if test="spotImg != null">spot_img,</if>
+            <if test="lng != null">lng,</if>
+            <if test="lat != null">lat,</if>
             <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
             <if test="isDeleted != null">is_deleted,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="spotName != null">#{spotName},</if>
+            <if test="spotName != null and spotName != ''">#{spotName},</if>
+            <if test="coverImg != null">#{coverImg},</if>
             <if test="introduction != null">#{introduction},</if>
             <if test="telephone != null">#{telephone},</if>
             <if test="playtime != null">#{playtime},</if>
@@ -58,15 +69,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="tickets != null">#{tickets},</if>
             <if test="openingHours != null">#{openingHours},</if>
             <if test="location != null">#{location},</if>
+            <if test="spotImg != null">#{spotImg},</if>
+            <if test="lng != null">#{lng},</if>
+            <if test="lat != null">#{lat},</if>
             <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
             <if test="isDeleted != null">#{isDeleted},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateSpot" parameterType="Spot">
         update tb_spot
         <trim prefix="SET" suffixOverrides=",">
-            <if test="spotName != null">spot_name = #{spotName},</if>
+            <if test="spotName != null and spotName != ''">spot_name = #{spotName},</if>
+            <if test="coverImg != null">cover_img = #{coverImg},</if>
             <if test="introduction != null">introduction = #{introduction},</if>
             <if test="telephone != null">telephone = #{telephone},</if>
             <if test="playtime != null">playtime = #{playtime},</if>
@@ -74,7 +90,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="tickets != null">tickets = #{tickets},</if>
             <if test="openingHours != null">opening_hours = #{openingHours},</if>
             <if test="location != null">location = #{location},</if>
+            <if test="spotImg != null">spot_img = #{spotImg},</if>
+            <if test="lng != null">lng = #{lng},</if>
+            <if test="lat != null">lat = #{lat},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
         </trim>
         where id = #{id}
@@ -85,7 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteSpotByIds" parameterType="String">
-        delete from tb_spot where id in 
+        delete from tb_spot where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

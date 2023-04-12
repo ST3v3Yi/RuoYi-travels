@@ -2,6 +2,7 @@ package com.ruoyi.travels.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.travels.domain.RouteComments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.travels.mapper.SpotCommentsMapper;
@@ -10,19 +11,19 @@ import com.ruoyi.travels.service.ISpotCommentsService;
 
 /**
  * 景区评分评论Service业务层处理
- * 
+ *
  * @author Yifun
- * @date 2023-04-02
+ * @date 2023-04-11
  */
 @Service
-public class SpotCommentsServiceImpl implements ISpotCommentsService 
+public class SpotCommentsServiceImpl implements ISpotCommentsService
 {
     @Autowired
     private SpotCommentsMapper spotCommentsMapper;
 
     /**
      * 查询景区评分评论
-     * 
+     *
      * @param id 景区评分评论主键
      * @return 景区评分评论
      */
@@ -34,7 +35,7 @@ public class SpotCommentsServiceImpl implements ISpotCommentsService
 
     /**
      * 查询景区评分评论列表
-     * 
+     *
      * @param spotComments 景区评分评论
      * @return 景区评分评论
      */
@@ -45,8 +46,17 @@ public class SpotCommentsServiceImpl implements ISpotCommentsService
     }
 
     /**
+     * 获取指定景区的评论列表 List
+     *
+     */
+    public List<SpotComments> selectSpotCommentsListBySpotId(Long spotId)
+    {
+        return spotCommentsMapper.selectSpotCommentsListBySpotId(spotId);
+    }
+
+    /**
      * 新增景区评分评论
-     * 
+     *
      * @param spotComments 景区评分评论
      * @return 结果
      */
@@ -59,7 +69,7 @@ public class SpotCommentsServiceImpl implements ISpotCommentsService
 
     /**
      * 修改景区评分评论
-     * 
+     *
      * @param spotComments 景区评分评论
      * @return 结果
      */
@@ -71,7 +81,7 @@ public class SpotCommentsServiceImpl implements ISpotCommentsService
 
     /**
      * 批量删除景区评分评论
-     * 
+     *
      * @param ids 需要删除的景区评分评论主键
      * @return 结果
      */
@@ -83,7 +93,7 @@ public class SpotCommentsServiceImpl implements ISpotCommentsService
 
     /**
      * 删除景区评分评论信息
-     * 
+     *
      * @param id 景区评分评论主键
      * @return 结果
      */

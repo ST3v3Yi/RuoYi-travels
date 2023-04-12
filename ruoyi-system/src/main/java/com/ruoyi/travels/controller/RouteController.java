@@ -45,6 +45,18 @@ public class RouteController extends BaseController
     }
 
     /**
+     * 查询发布路线列表
+     */
+    @PreAuthorize("@ss.hasPermi('route:route:list')")
+    @GetMapping("/routeList")
+    public TableDataInfo routeList()
+    {
+        startPage();
+        List<Route> list = routeService.selectReleasedRouteList();
+        return getDataTable(list);
+    }
+
+    /**
      * 获取相应天数限制内的列表
      */
     @PreAuthorize("@ss.hasPermi('route:route:list')")

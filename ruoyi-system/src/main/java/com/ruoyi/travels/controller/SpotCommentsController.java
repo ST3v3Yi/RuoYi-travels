@@ -23,9 +23,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 景区评分评论Controller
- * 
+ *
  * @author Yifun
- * @date 2023-04-02
+ * @date 2023-04-11
  */
 @RestController
 @RequestMapping("/spotComments/spotComments")
@@ -44,6 +44,16 @@ public class SpotCommentsController extends BaseController
         startPage();
         List<SpotComments> list = spotCommentsService.selectSpotCommentsList(spotComments);
         return getDataTable(list);
+    }
+
+    /**
+     * 查询指定景区的评论列表
+     */
+    @PreAuthorize("@ss.hasPermi('routeComments:routeComments:list')")
+    @GetMapping("/list/{spotId}")
+    public AjaxResult getList(@PathVariable("spotId") Long spotId)
+    {
+        return success(spotCommentsService.selectSpotCommentsListBySpotId(spotId));
     }
 
     /**
@@ -96,7 +106,7 @@ public class SpotCommentsController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('spotComments:spotComments:remove')")
     @Log(title = "景区评分评论", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(spotCommentsService.deleteSpotCommentsByIds(ids));

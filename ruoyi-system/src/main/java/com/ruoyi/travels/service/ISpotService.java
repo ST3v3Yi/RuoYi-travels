@@ -5,15 +5,15 @@ import com.ruoyi.travels.domain.Spot;
 
 /**
  * 景区Service接口
- * 
+ *
  * @author Yifun
- * @date 2023-04-02
+ * @date 2023-04-11
  */
-public interface ISpotService 
+public interface ISpotService
 {
     /**
      * 查询景区
-     * 
+     *
      * @param id 景区主键
      * @return 景区
      */
@@ -21,7 +21,7 @@ public interface ISpotService
 
     /**
      * 查询景区列表
-     * 
+     *
      * @param spot 景区
      * @return 景区集合
      */
@@ -29,7 +29,7 @@ public interface ISpotService
 
     /**
      * 新增景区
-     * 
+     *
      * @param spot 景区
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface ISpotService
 
     /**
      * 修改景区
-     * 
+     *
      * @param spot 景区
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface ISpotService
 
     /**
      * 批量删除景区
-     * 
+     *
      * @param ids 需要删除的景区主键集合
      * @return 结果
      */
@@ -53,7 +53,7 @@ public interface ISpotService
 
     /**
      * 删除景区信息
-     * 
+     *
      * @param id 景区主键
      * @return 结果
      */

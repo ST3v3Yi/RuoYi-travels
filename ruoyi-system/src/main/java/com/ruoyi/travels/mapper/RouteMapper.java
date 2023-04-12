@@ -6,15 +6,15 @@ import io.lettuce.core.dynamic.annotation.Param;
 
 /**
  * 路线Mapper接口
- * 
+ *
  * @author Yifun
  * @date 2023-03-11
  */
-public interface RouteMapper 
+public interface RouteMapper
 {
     /**
      * 查询路线
-     * 
+     *
      * @param id 路线主键
      * @return 路线
      */
@@ -22,11 +22,18 @@ public interface RouteMapper
 
     /**
      * 查询路线列表
-     * 
+     *
      * @param route 路线
      * @return 路线集合
      */
     public List<Route> selectRouteList(Route route);
+
+    /**
+     * 查询发布路线列表
+     *
+     * @return 路线集合
+     */
+    public List<Route> selectReleasedRouteList();
 
     /**
      * 获取相应天数限制内的列表
@@ -40,7 +47,7 @@ public interface RouteMapper
 
     /**
      * 新增路线
-     * 
+     *
      * @param route 路线
      * @return 结果
      */
@@ -48,7 +55,7 @@ public interface RouteMapper
 
     /**
      * 修改路线
-     * 
+     *
      * @param route 路线
      * @return 结果
      */
@@ -56,7 +63,7 @@ public interface RouteMapper
 
     /**
      * 删除路线
-     * 
+     *
      * @param id 路线主键
      * @return 结果
      */
@@ -64,7 +71,7 @@ public interface RouteMapper
 
     /**
      * 批量删除路线
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */

@@ -7,9 +7,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 景区对象 tb_spot
- * 
+ *
  * @author Yifun
- * @date 2023-04-02
+ * @date 2023-04-11
  */
 public class Spot extends BaseEntity
 {
@@ -22,10 +22,15 @@ public class Spot extends BaseEntity
     @Excel(name = "景区名字")
     private String spotName;
 
+    /** 景区封面图 */
+    @Excel(name = "景区封面图")
+    private String coverImg;
+
     /** 景区简介 */
     private String introduction;
 
     /** 联系电话 */
+    @Excel(name = "联系电话")
     private String telephone;
 
     /** 用时参考  */
@@ -41,99 +46,145 @@ public class Spot extends BaseEntity
     private String openingHours;
 
     /** 景区位置 */
+    @Excel(name = "景区位置")
     private String location;
+
+    /** 景区图片 */
+    private String spotImg;
+
+    /** 经度 */
+    private Long lng;
+
+    /** 纬度 */
+    private Long lat;
 
     /** 是否删除 */
     @Excel(name = "是否删除")
     private Long isDeleted;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setSpotName(String spotName) 
+    public void setSpotName(String spotName)
     {
         this.spotName = spotName;
     }
 
-    public String getSpotName() 
+    public String getSpotName()
     {
         return spotName;
     }
-    public void setIntroduction(String introduction) 
+    public void setCoverImg(String coverImg)
+    {
+        this.coverImg = coverImg;
+    }
+
+    public String getCoverImg()
+    {
+        return coverImg;
+    }
+    public void setIntroduction(String introduction)
     {
         this.introduction = introduction;
     }
 
-    public String getIntroduction() 
+    public String getIntroduction()
     {
         return introduction;
     }
-    public void setTelephone(String telephone) 
+    public void setTelephone(String telephone)
     {
         this.telephone = telephone;
     }
 
-    public String getTelephone() 
+    public String getTelephone()
     {
         return telephone;
     }
-    public void setPlaytime(Long playtime) 
+    public void setPlaytime(Long playtime)
     {
         this.playtime = playtime;
     }
 
-    public Long getPlaytime() 
+    public Long getPlaytime()
     {
         return playtime;
     }
-    public void setTraffic(String traffic) 
+    public void setTraffic(String traffic)
     {
         this.traffic = traffic;
     }
 
-    public String getTraffic() 
+    public String getTraffic()
     {
         return traffic;
     }
-    public void setTickets(String tickets) 
+    public void setTickets(String tickets)
     {
         this.tickets = tickets;
     }
 
-    public String getTickets() 
+    public String getTickets()
     {
         return tickets;
     }
-    public void setOpeningHours(String openingHours) 
+    public void setOpeningHours(String openingHours)
     {
         this.openingHours = openingHours;
     }
 
-    public String getOpeningHours() 
+    public String getOpeningHours()
     {
         return openingHours;
     }
-    public void setLocation(String location) 
+    public void setLocation(String location)
     {
         this.location = location;
     }
 
-    public String getLocation() 
+    public String getLocation()
     {
         return location;
     }
-    public void setIsDeleted(Long isDeleted) 
+    public void setSpotImg(String spotImg)
+    {
+        this.spotImg = spotImg;
+    }
+
+    public String getSpotImg()
+    {
+        return spotImg;
+    }
+    public void setLng(Long lng)
+    {
+        this.lng = lng;
+    }
+
+    public Long getLng()
+    {
+        return lng;
+    }
+    public void setLat(Long lat)
+    {
+        this.lat = lat;
+    }
+
+    public Long getLat()
+    {
+        return lat;
+    }
+    public void setIsDeleted(Long isDeleted)
     {
         this.isDeleted = isDeleted;
     }
 
-    public Long getIsDeleted() 
+    public Long getIsDeleted()
     {
         return isDeleted;
     }
@@ -141,17 +192,22 @@ public class Spot extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("spotName", getSpotName())
-            .append("introduction", getIntroduction())
-            .append("telephone", getTelephone())
-            .append("playtime", getPlaytime())
-            .append("traffic", getTraffic())
-            .append("tickets", getTickets())
-            .append("openingHours", getOpeningHours())
-            .append("location", getLocation())
-            .append("createTime", getCreateTime())
-            .append("isDeleted", getIsDeleted())
-            .toString();
+                .append("id", getId())
+                .append("spotName", getSpotName())
+                .append("coverImg", getCoverImg())
+                .append("introduction", getIntroduction())
+                .append("telephone", getTelephone())
+                .append("playtime", getPlaytime())
+                .append("traffic", getTraffic())
+                .append("tickets", getTickets())
+                .append("openingHours", getOpeningHours())
+                .append("location", getLocation())
+                .append("spotImg", getSpotImg())
+                .append("lng", getLng())
+                .append("lat", getLat())
+                .append("createTime", getCreateTime())
+                .append("updateTime", getUpdateTime())
+                .append("isDeleted", getIsDeleted())
+                .toString();
     }
 }

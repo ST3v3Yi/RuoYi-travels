@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.travels.mapper.SpotCommentsMapper">
-    
+
     <resultMap type="SpotComments" id="SpotCommentsResult">
         <result property="id"    column="id"    />
         <result property="userId"    column="user_id"    />
         <result property="spotId"    column="spot_id"    />
         <result property="content"    column="content"    />
         <result property="rating"    column="rating"    />
+        <result property="img"    column="img"    />
         <result property="createTime"    column="create_time"    />
+        <result property="nickName"    column="nick_name"    />
+        <result property="avatar"    column="avatar"    />
     </resultMap>
 
     <sql id="selectSpotCommentsVo">
-        select id, user_id, spot_id, content, rating, create_time from tb_spot_comments
+        select id, user_id, spot_id, content, rating, img, create_time from tb_spot_comments
     </sql>
 
     <select id="selectSpotCommentsList" parameterType="SpotComments" resultMap="SpotCommentsResult">
         <include refid="selectSpotCommentsVo"/>
-        <where>  
+        <where>
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="spotId != null "> and spot_id = #{spotId}</if>
-            <if test="rating != null "> and rating = #{rating}</if>
-            <if test="createTime != null "> and create_time = #{createTime}</if>
         </where>
     </select>
-    
+
     <select id="selectSpotCommentsById" parameterType="Long" resultMap="SpotCommentsResult">
         <include refid="selectSpotCommentsVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="selectSpotCommentsListBySpotId" parameterType="Long" resultMap="SpotCommentsResult">
+        select id, tb_spot_comments.user_id, spot_id, content, rating, img, tb_spot_comments.create_time, nick_name, avatar
+        from tb_spot_comments, sys_user
+        where tb_spot_comments.user_id = sys_user.user_id and spot_id = #{spotId}
+        ORDER BY id ASC
+    </select>
+
     <insert id="insertSpotComments" parameterType="SpotComments" useGeneratedKeys="true" keyProperty="id">
         insert into tb_spot_comments
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -39,15 +47,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="spotId != null">spot_id,</if>
             <if test="content != null">content,</if>
             <if test="rating != null">rating,</if>
+            <if test="img != null">img,</if>
             <if test="createTime != null">create_time,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
             <if test="spotId != null">#{spotId},</if>
             <if test="content != null">#{content},</if>
             <if test="rating != null">#{rating},</if>
+            <if test="img != null">#{img},</if>
             <if test="createTime != null">#{createTime},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateSpotComments" parameterType="SpotComments">
@@ -57,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="spotId != null">spot_id = #{spotId},</if>
             <if test="content != null">content = #{content},</if>
             <if test="rating != null">rating = #{rating},</if>
+            <if test="img != null">img = #{img},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
         </trim>
         where id = #{id}
@@ -67,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteSpotCommentsByIds" parameterType="String">
-        delete from tb_spot_comments where id in 
+        delete from tb_spot_comments where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
