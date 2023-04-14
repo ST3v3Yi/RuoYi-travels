@@ -70,6 +70,16 @@ public class SpotReplyController extends BaseController
     }
 
     /**
+     * 根据评论ID获取路线回复
+     */
+    @PreAuthorize("@ss.hasPermi('routeReply:routeReply:query')")
+    @GetMapping(value = "/list/{commentId}")
+    public AjaxResult getList(@PathVariable("commentId") Long commentId)
+    {
+        return success(spotReplyService.selectSpotReplyByCommentId(commentId));
+    }
+
+    /**
      * 新增景区回复表
      */
     @PreAuthorize("@ss.hasPermi('spotReply:spotReply:add')")

@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 景区对象 tb_spot
  *
  * @author Yifun
- * @date 2023-04-11
+ * @date 2023-04-12
  */
 public class Spot extends BaseEntity
 {
@@ -21,6 +21,10 @@ public class Spot extends BaseEntity
     /** 景区名字 */
     @Excel(name = "景区名字")
     private String spotName;
+
+    /** 景区外文名 */
+    @Excel(name = "景区外文名")
+    private String spotForeignName;
 
     /** 景区封面图 */
     @Excel(name = "景区封面图")
@@ -53,10 +57,10 @@ public class Spot extends BaseEntity
     private String spotImg;
 
     /** 经度 */
-    private Long lng;
+    private Double lng;
 
     /** 纬度 */
-    private Long lat;
+    private Double lat;
 
     /** 是否删除 */
     @Excel(name = "是否删除")
@@ -79,6 +83,15 @@ public class Spot extends BaseEntity
     public String getSpotName()
     {
         return spotName;
+    }
+    public void setSpotForeignName(String spotForeignName)
+    {
+        this.spotForeignName = spotForeignName;
+    }
+
+    public String getSpotForeignName()
+    {
+        return spotForeignName;
     }
     public void setCoverImg(String coverImg)
     {
@@ -161,21 +174,21 @@ public class Spot extends BaseEntity
     {
         return spotImg;
     }
-    public void setLng(Long lng)
+    public void setLng(Double lng)
     {
         this.lng = lng;
     }
 
-    public Long getLng()
+    public Double getLng()
     {
         return lng;
     }
-    public void setLat(Long lat)
+    public void setLat(Double lat)
     {
         this.lat = lat;
     }
 
-    public Long getLat()
+    public Double getLat()
     {
         return lat;
     }
@@ -194,6 +207,7 @@ public class Spot extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
                 .append("id", getId())
                 .append("spotName", getSpotName())
+                .append("spotForeignName", getSpotForeignName())
                 .append("coverImg", getCoverImg())
                 .append("introduction", getIntroduction())
                 .append("telephone", getTelephone())

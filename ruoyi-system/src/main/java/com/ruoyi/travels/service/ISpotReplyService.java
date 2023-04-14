@@ -1,6 +1,8 @@
 package com.ruoyi.travels.service;
 
 import java.util.List;
+
+import com.ruoyi.travels.domain.RouteReplyList;
 import com.ruoyi.travels.domain.SpotReply;
 
 /**
@@ -18,6 +20,11 @@ public interface ISpotReplyService
      * @return 景区回复表
      */
     public SpotReply selectSpotReplyById(Long id);
+
+    /**
+     * 根据评论ID查询回复
+     */
+    public List<SpotReply> selectSpotReplyByCommentId(Long commentId);
 
     /**
      * 查询景区回复表列表

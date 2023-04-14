@@ -38,6 +38,18 @@ public class SpotReply extends BaseEntity
     @Excel(name = "回复内容")
     private String content;
 
+    /** 回复用户昵称 */
+    @Excel(name = "回复用户昵称")
+    private String userName;
+
+    /** 被回复用户昵称 */
+    @Excel(name = "被回复用户昵称")
+    private String toUserName;
+
+    /** 回复用户头像 */
+    @Excel(name = "回复用户头像")
+    private String avatar;
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -92,6 +104,33 @@ public class SpotReply extends BaseEntity
     {
         return content;
     }
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }
+
+    public String getUserName()
+    {
+        return userName;
+    }
+    public void setToUserName(String toUserName)
+    {
+        this.toUserName = toUserName;
+    }
+
+    public String getToUserName()
+    {
+        return toUserName;
+    }
+    public void setAvatar(String avatar)
+    {
+        this.avatar = avatar;
+    }
+
+    public String getAvatar()
+    {
+        return avatar;
+    }
 
     @Override
     public String toString() {
@@ -103,6 +142,9 @@ public class SpotReply extends BaseEntity
             .append("toUserId", getToUserId())
             .append("content", getContent())
             .append("createTime", getCreateTime())
+            .append("userName", getUserName())
+            .append("toUserName", getToUserName())
+            .append("avatar", getAvatar())
             .toString();
     }
 }
