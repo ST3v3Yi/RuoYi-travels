@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.travels.mapper.RoomFacilitiesMapper">
+    
+    <resultMap type="RoomFacilities" id="RoomFacilitiesResult">
+        <result property="id"    column="id"    />
+        <result property="roomId"    column="room_id"    />
+        <result property="facilityId"    column="facility_id"    />
+        <result property="isFree"    column="is_free"    />
+    </resultMap>
+
+    <sql id="selectRoomFacilitiesVo">
+        select id, room_id, facility_id, is_free from tb_room_facilities
+    </sql>
+
+    <select id="selectRoomFacilitiesList" parameterType="RoomFacilities" resultMap="RoomFacilitiesResult">
+        <include refid="selectRoomFacilitiesVo"/>
+        <where>  
+            <if test="roomId != null "> and room_id = #{roomId}</if>
+            <if test="facilityId != null "> and facility_id = #{facilityId}</if>
+        </where>
+    </select>
+    
+    <select id="selectRoomFacilitiesById" parameterType="Long" resultMap="RoomFacilitiesResult">
+        <include refid="selectRoomFacilitiesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRoomFacilities" parameterType="RoomFacilities" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_room_facilities
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roomId != null">room_id,</if>
+            <if test="facilityId != null">facility_id,</if>
+            <if test="isFree != null">is_free,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roomId != null">#{roomId},</if>
+            <if test="facilityId != null">#{facilityId},</if>
+            <if test="isFree != null">#{isFree},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRoomFacilities" parameterType="RoomFacilities">
+        update tb_room_facilities
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roomId != null">room_id = #{roomId},</if>
+            <if test="facilityId != null">facility_id = #{facilityId},</if>
+            <if test="isFree != null">is_free = #{isFree},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRoomFacilitiesById" parameterType="Long">
+        delete from tb_room_facilities where id = #{id}
+    </delete>
+
+    <delete id="deleteRoomFacilitiesByIds" parameterType="String">
+        delete from tb_room_facilities where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -70,6 +70,10 @@ public class Route extends BaseEntity
     @Excel(name = "用户昵称")
     private String userName;
 
+    /** 用户头像 */
+    @Excel(name = "用户头像")
+    private String avatar;
+
     /** 创建部门 */
     private Long deptId;
 
@@ -207,6 +211,15 @@ public class Route extends BaseEntity
     {
         return userName;
     }
+    public void setAvatar(String avatar)
+    {
+        this.avatar = avatar;
+    }
+
+    public String getAvatar()
+    {
+        return avatar;
+    }
     public void setDeptId(Long deptId) 
     {
         this.deptId = deptId;
@@ -278,6 +291,7 @@ public class Route extends BaseEntity
             .append("maxPrice", getMaxPrice())
             .append("userId", getUserId())
             .append("userName", getUserName())
+            .append("avatar", getAvatar())
             .append("deptId", getDeptId())
             .append("deptName", getDeptName())
             .append("createTime", getCreateTime())

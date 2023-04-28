@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.travels.mapper.HotelMapper">
+    
+    <resultMap type="Hotel" id="HotelResult">
+        <result property="id"    column="id"    />
+        <result property="hotelName"    column="hotel_name"    />
+        <result property="hotelForeignName"    column="hotel_foreign_name"    />
+        <result property="coverImg"    column="cover_img"    />
+        <result property="hotelImg"    column="hotel_img"    />
+        <result property="hotelInfo"    column="hotel_info"    />
+        <result property="introduction"    column="introduction"    />
+        <result property="hotelBrand"    column="hotel_brand"    />
+        <result property="location"    column="location"    />
+        <result property="lng"    column="lng"    />
+        <result property="lat"    column="lat"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectHotelVo">
+        select id, hotel_name, hotel_foreign_name, cover_img, hotel_img, hotel_info, introduction, hotel_brand, location, lng, lat, create_time, update_time, is_deleted from tb_hotel
+    </sql>
+
+    <select id="selectHotelList" parameterType="Hotel" resultMap="HotelResult">
+        <include refid="selectHotelVo"/>
+        <where>  
+            <if test="hotelName != null  and hotelName != ''"> and hotel_name like concat('%', #{hotelName}, '%')</if>
+            <if test="hotelBrand != null  and hotelBrand != ''"> and hotel_brand = #{hotelBrand}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectHotelById" parameterType="Long" resultMap="HotelResult">
+        <include refid="selectHotelVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHotel" parameterType="Hotel" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_hotel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hotelName != null">hotel_name,</if>
+            <if test="hotelForeignName != null">hotel_foreign_name,</if>
+            <if test="coverImg != null">cover_img,</if>
+            <if test="hotelImg != null">hotel_img,</if>
+            <if test="hotelInfo != null">hotel_info,</if>
+            <if test="introduction != null">introduction,</if>
+            <if test="hotelBrand != null">hotel_brand,</if>
+            <if test="location != null">location,</if>
+            <if test="lng != null">lng,</if>
+            <if test="lat != null">lat,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hotelName != null">#{hotelName},</if>
+            <if test="hotelForeignName != null">#{hotelForeignName},</if>
+            <if test="coverImg != null">#{coverImg},</if>
+            <if test="hotelImg != null">#{hotelImg},</if>
+            <if test="hotelInfo != null">#{hotelInfo},</if>
+            <if test="introduction != null">#{introduction},</if>
+            <if test="hotelBrand != null">#{hotelBrand},</if>
+            <if test="location != null">#{location},</if>
+            <if test="lng != null">#{lng},</if>
+            <if test="lat != null">#{lat},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHotel" parameterType="Hotel">
+        update tb_hotel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hotelName != null">hotel_name = #{hotelName},</if>
+            <if test="hotelForeignName != null">hotel_foreign_name = #{hotelForeignName},</if>
+            <if test="coverImg != null">cover_img = #{coverImg},</if>
+            <if test="hotelImg != null">hotel_img = #{hotelImg},</if>
+            <if test="hotelInfo != null">hotel_info = #{hotelInfo},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="hotelBrand != null">hotel_brand = #{hotelBrand},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="lng != null">lng = #{lng},</if>
+            <if test="lat != null">lat = #{lat},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHotelById" parameterType="Long">
+        delete from tb_hotel where id = #{id}
+    </delete>
+
+    <delete id="deleteHotelByIds" parameterType="String">
+        delete from tb_hotel where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
