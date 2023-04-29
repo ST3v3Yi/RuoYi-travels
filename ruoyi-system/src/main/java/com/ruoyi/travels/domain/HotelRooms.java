@@ -8,9 +8,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 酒店房间对象 tb_hotel_rooms
- * 
+ *
  * @author Yifun
- * @date 2023-04-28
+ * @date 2023-04-29
  */
 public class HotelRooms extends BaseEntity
 {
@@ -23,9 +23,13 @@ public class HotelRooms extends BaseEntity
     @Excel(name = "酒店id")
     private Long hotelId;
 
-    /** 房间类型 */
-    @Excel(name = "房间类型")
-    private String roomType;
+    /** 房间名称 */
+    @Excel(name = "房间名称")
+    private String roomName;
+
+    /** 房间类型（0：双床房 1：大床房 2：多床房） */
+    @Excel(name = "房间类型", readConverterExp = "0=：双床房,1=：大床房,2=：多床房")
+    private Long type;
 
     /** 房间大小 */
     @Excel(name = "房间大小")
@@ -36,7 +40,6 @@ public class HotelRooms extends BaseEntity
     private Long number;
 
     /** 床铺情况 */
-    @Excel(name = "床铺情况")
     private String bed;
 
     /** 房间价格 */
@@ -51,84 +54,93 @@ public class HotelRooms extends BaseEntity
     @Excel(name = "房间图片")
     private String img;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setHotelId(Long hotelId) 
+    public void setHotelId(Long hotelId)
     {
         this.hotelId = hotelId;
     }
 
-    public Long getHotelId() 
+    public Long getHotelId()
     {
         return hotelId;
     }
-    public void setRoomType(String roomType) 
+    public void setRoomName(String roomName)
     {
-        this.roomType = roomType;
+        this.roomName = roomName;
     }
 
-    public String getRoomType() 
+    public String getRoomName()
     {
-        return roomType;
+        return roomName;
     }
-    public void setSize(Long size) 
+    public void setType(Long type)
+    {
+        this.type = type;
+    }
+
+    public Long getType()
+    {
+        return type;
+    }
+    public void setSize(Long size)
     {
         this.size = size;
     }
 
-    public Long getSize() 
+    public Long getSize()
     {
         return size;
     }
-    public void setNumber(Long number) 
+    public void setNumber(Long number)
     {
         this.number = number;
     }
 
-    public Long getNumber() 
+    public Long getNumber()
     {
         return number;
     }
-    public void setBed(String bed) 
+    public void setBed(String bed)
     {
         this.bed = bed;
     }
 
-    public String getBed() 
+    public String getBed()
     {
         return bed;
     }
-    public void setPrice(BigDecimal price) 
+    public void setPrice(BigDecimal price)
     {
         this.price = price;
     }
 
-    public BigDecimal getPrice() 
+    public BigDecimal getPrice()
     {
         return price;
     }
-    public void setCounts(Long counts) 
+    public void setCounts(Long counts)
     {
         this.counts = counts;
     }
 
-    public Long getCounts() 
+    public Long getCounts()
     {
         return counts;
     }
-    public void setImg(String img) 
+    public void setImg(String img)
     {
         this.img = img;
     }
 
-    public String getImg() 
+    public String getImg()
     {
         return img;
     }
@@ -136,15 +148,16 @@ public class HotelRooms extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("hotelId", getHotelId())
-            .append("roomType", getRoomType())
-            .append("size", getSize())
-            .append("number", getNumber())
-            .append("bed", getBed())
-            .append("price", getPrice())
-            .append("counts", getCounts())
-            .append("img", getImg())
-            .toString();
+                .append("id", getId())
+                .append("hotelId", getHotelId())
+                .append("roomName", getRoomName())
+                .append("type", getType())
+                .append("size", getSize())
+                .append("number", getNumber())
+                .append("bed", getBed())
+                .append("price", getPrice())
+                .append("counts", getCounts())
+                .append("img", getImg())
+                .toString();
     }
 }

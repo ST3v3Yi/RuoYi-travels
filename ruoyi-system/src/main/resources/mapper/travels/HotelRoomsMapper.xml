@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.travels.mapper.HotelRoomsMapper">
-    
+
     <resultMap type="HotelRooms" id="HotelRoomsResult">
         <result property="id"    column="id"    />
         <result property="hotelId"    column="hotel_id"    />
-        <result property="roomType"    column="room_type"    />
+        <result property="roomName"    column="room_name"    />
+        <result property="type"    column="type"    />
         <result property="size"    column="size"    />
         <result property="number"    column="number"    />
         <result property="bed"    column="bed"    />
@@ -17,53 +18,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectHotelRoomsVo">
-        select id, hotel_id, room_type, size, number, bed, price, counts, img from tb_hotel_rooms
+        select id, hotel_id, room_name, type, size, number, bed, price, counts, img from tb_hotel_rooms
     </sql>
 
     <select id="selectHotelRoomsList" parameterType="HotelRooms" resultMap="HotelRoomsResult">
         <include refid="selectHotelRoomsVo"/>
-        <where>  
+        <where>
             <if test="hotelId != null "> and hotel_id = #{hotelId}</if>
-            <if test="roomType != null  and roomType != ''"> and room_type = #{roomType}</if>
+            <if test="roomName != null  and roomName != ''"> and room_name like concat('%', #{roomName}, '%')</if>
+            <if test="type != null "> and type = #{type}</if>
             <if test="number != null "> and number = #{number}</if>
             <if test="price != null "> and price &lt;= #{price}</if>
         </where>
     </select>
-    
+
     <select id="selectHotelRoomsById" parameterType="Long" resultMap="HotelRoomsResult">
         <include refid="selectHotelRoomsVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertHotelRooms" parameterType="HotelRooms" useGeneratedKeys="true" keyProperty="id">
         insert into tb_hotel_rooms
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="hotelId != null">hotel_id,</if>
-            <if test="roomType != null">room_type,</if>
+            <if test="roomName != null">room_name,</if>
+            <if test="type != null">type,</if>
             <if test="size != null">size,</if>
             <if test="number != null">number,</if>
             <if test="bed != null">bed,</if>
             <if test="price != null">price,</if>
             <if test="counts != null">counts,</if>
             <if test="img != null">img,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="hotelId != null">#{hotelId},</if>
-            <if test="roomType != null">#{roomType},</if>
+            <if test="roomName != null">#{roomName},</if>
+            <if test="type != null">#{type},</if>
             <if test="size != null">#{size},</if>
             <if test="number != null">#{number},</if>
             <if test="bed != null">#{bed},</if>
             <if test="price != null">#{price},</if>
             <if test="counts != null">#{counts},</if>
             <if test="img != null">#{img},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateHotelRooms" parameterType="HotelRooms">
         update tb_hotel_rooms
         <trim prefix="SET" suffixOverrides=",">
             <if test="hotelId != null">hotel_id = #{hotelId},</if>
-            <if test="roomType != null">room_type = #{roomType},</if>
+            <if test="roomName != null">room_name = #{roomName},</if>
+            <if test="type != null">type = #{type},</if>
             <if test="size != null">size = #{size},</if>
             <if test="number != null">number = #{number},</if>
             <if test="bed != null">bed = #{bed},</if>
@@ -79,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteHotelRoomsByIds" parameterType="String">
-        delete from tb_hotel_rooms where id in 
+        delete from tb_hotel_rooms where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

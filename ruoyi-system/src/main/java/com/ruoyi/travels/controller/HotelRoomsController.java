@@ -23,9 +23,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 酒店房间Controller
- * 
+ *
  * @author Yifun
- * @date 2023-04-28
+ * @date 2023-04-29
  */
 @RestController
 @RequestMapping("/travels/rooms")
@@ -96,7 +96,7 @@ public class HotelRoomsController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('travels:rooms:remove')")
     @Log(title = "酒店房间", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(hotelRoomsService.deleteHotelRoomsByIds(ids));

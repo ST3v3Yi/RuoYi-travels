@@ -5,15 +5,15 @@ import com.ruoyi.travels.domain.HotelRooms;
 
 /**
  * 酒店房间Service接口
- * 
+ *
  * @author Yifun
- * @date 2023-04-28
+ * @date 2023-04-29
  */
-public interface IHotelRoomsService 
+public interface IHotelRoomsService
 {
     /**
      * 查询酒店房间
-     * 
+     *
      * @param id 酒店房间主键
      * @return 酒店房间
      */
@@ -21,7 +21,7 @@ public interface IHotelRoomsService
 
     /**
      * 查询酒店房间列表
-     * 
+     *
      * @param hotelRooms 酒店房间
      * @return 酒店房间集合
      */
@@ -29,7 +29,7 @@ public interface IHotelRoomsService
 
     /**
      * 新增酒店房间
-     * 
+     *
      * @param hotelRooms 酒店房间
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface IHotelRoomsService
 
     /**
      * 修改酒店房间
-     * 
+     *
      * @param hotelRooms 酒店房间
      * @return 结果
      */
@@ -45,7 +45,7 @@ public interface IHotelRoomsService
 
     /**
      * 批量删除酒店房间
-     * 
+     *
      * @param ids 需要删除的酒店房间主键集合
      * @return 结果
      */
@@ -53,7 +53,7 @@ public interface IHotelRoomsService
 
     /**
      * 删除酒店房间信息
-     * 
+     *
      * @param id 酒店房间主键
      * @return 结果
      */
