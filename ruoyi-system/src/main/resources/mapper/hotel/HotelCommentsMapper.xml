@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.travels.mapper.HotelCommentsMapper">
+    
+    <resultMap type="HotelComments" id="HotelCommentsResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="nickName"    column="nick_name"    />
+        <result property="avatar"    column="avatar"    />
+        <result property="hotelId"    column="hotel_id"    />
+        <result property="roomId"    column="room_id"    />
+        <result property="roomName"    column="room_name"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="mainRating"    column="main_rating"    />
+        <result property="environmentRating"    column="environment_rating"    />
+        <result property="hygieneRating"    column="hygiene_rating"    />
+        <result property="serviceRating"    column="service_rating"    />
+        <result property="facilityRating"    column="facility_rating"    />
+        <result property="content"    column="content"    />
+        <result property="img"    column="img"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectHotelCommentsVo">
+        select id, user_id, hotel_id, room_id, order_id, main_rating, environment_rating, hygiene_rating, service_rating, facility_rating, content, img, create_time from tb_hotel_comments
+    </sql>
+
+    <select id="selectHotelCommentsList" parameterType="HotelComments" resultMap="HotelCommentsResult">
+        <include refid="selectHotelCommentsVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="hotelId != null "> and hotel_id = #{hotelId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHotelCommentsById" parameterType="Long" resultMap="HotelCommentsResult">
+        <include refid="selectHotelCommentsVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectHotelCommentsByHotelId" parameterType="Long" resultMap="HotelCommentsResult">
+        select tb_hotel_comments.id, tb_hotel_comments.user_id, nick_name, avatar, tb_hotel_comments.hotel_id, room_id, room_name, order_id, main_rating, environment_rating, hygiene_rating, service_rating, facility_rating, content, tb_hotel_comments.img, tb_hotel_comments.create_time
+        from tb_hotel_comments, sys_user, tb_hotel_rooms
+        where tb_hotel_comments.user_id = sys_user.user_id and tb_hotel_comments.room_id = tb_hotel_rooms.id and tb_hotel_comments.hotel_id = 1
+        ORDER BY id ASC;
+    </select>
+
+    <select id="selectHotelRatingByHotelId" parameterType="Long" resultMap="HotelCommentsResult">
+        select ROUND(AVG(main_rating), 1) as main_rating, ROUND(AVG(environment_rating), 1) as environment_rating, ROUND(AVG(hygiene_rating), 1) as hygiene_rating, ROUND(AVG(service_rating), 1) as service_rating, ROUND(AVG(facility_rating), 1) as facility_rating
+        from tb_hotel_comments
+        where hotel_id = #{hotelId};
+    </select>
+        
+    <insert id="insertHotelComments" parameterType="HotelComments" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_hotel_comments
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="hotelId != null">hotel_id,</if>
+            <if test="roomId != null">room_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="mainRating != null">main_rating,</if>
+            <if test="environmentRating != null">environment_rating,</if>
+            <if test="hygieneRating != null">hygiene_rating,</if>
+            <if test="serviceRating != null">service_rating,</if>
+            <if test="facilityRating != null">facility_rating,</if>
+            <if test="content != null">content,</if>
+            <if test="img != null">img,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="hotelId != null">#{hotelId},</if>
+            <if test="roomId != null">#{roomId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="mainRating != null">#{mainRating},</if>
+            <if test="environmentRating != null">#{environmentRating},</if>
+            <if test="hygieneRating != null">#{hygieneRating},</if>
+            <if test="serviceRating != null">#{serviceRating},</if>
+            <if test="facilityRating != null">#{facilityRating},</if>
+            <if test="content != null">#{content},</if>
+            <if test="img != null">#{img},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHotelComments" parameterType="HotelComments">
+        update tb_hotel_comments
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="hotelId != null">hotel_id = #{hotelId},</if>
+            <if test="roomId != null">room_id = #{roomId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="mainRating != null">main_rating = #{mainRating},</if>
+            <if test="environmentRating != null">environment_rating = #{environmentRating},</if>
+            <if test="hygieneRating != null">hygiene_rating = #{hygieneRating},</if>
+            <if test="serviceRating != null">service_rating = #{serviceRating},</if>
+            <if test="facilityRating != null">facility_rating = #{facilityRating},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="img != null">img = #{img},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHotelCommentsById" parameterType="Long">
+        delete from tb_hotel_comments where id = #{id}
+    </delete>
+
+    <delete id="deleteHotelCommentsByIds" parameterType="String">
+        delete from tb_hotel_comments where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

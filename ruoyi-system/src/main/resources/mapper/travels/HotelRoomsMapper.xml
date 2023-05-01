@@ -37,6 +37,17 @@
         where id = #{id}
     </select>
 
+    <select id="selectHotelRoomsByHotelId" parameterType="Long" resultMap="HotelRoomsResult">
+        <include refid="selectHotelRoomsVo"/>
+        <where>hotel_id = #{hotelId}</where>
+    </select>
+
+    <select id="selectHotelMinPriceByHotelId" parameterType="Long" resultType="double">
+        select MIN(price)
+        from tb_hotel_rooms
+        where hotel_id = #{hotelId};
+    </select>
+
     <insert id="insertHotelRooms" parameterType="HotelRooms" useGeneratedKeys="true" keyProperty="id">
         insert into tb_hotel_rooms
         <trim prefix="(" suffix=")" suffixOverrides=",">

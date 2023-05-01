@@ -20,6 +20,16 @@ public interface IHotelRoomsService
     public HotelRooms selectHotelRoomsById(Long id);
 
     /**
+     * 获取相应酒店的房间信息
+     */
+    public List<HotelRooms> selectHotelRoomsByHotelId(Long hotelId);
+
+    /**
+     * 获取相应酒店的最低价格
+     */
+    public double selectHotelMinPriceByHotelId(Long hotelId);
+
+    /**
      * 查询酒店房间列表
      *
      * @param hotelRooms 酒店房间

@@ -32,6 +32,24 @@ public class HotelRoomsServiceImpl implements IHotelRoomsService
     }
 
     /**
+     * 获取相应酒店的房间信息
+     */
+    @Override
+    public List<HotelRooms> selectHotelRoomsByHotelId(Long hotelId)
+    {
+        return hotelRoomsMapper.selectHotelRoomsByHotelId(hotelId);
+    }
+
+    /**
+     * 获取相应酒店的最低价格
+     */
+    @Override
+    public double selectHotelMinPriceByHotelId(Long hotelId)
+    {
+        return hotelRoomsMapper.selectHotelMinPriceByHotelId(hotelId);
+    }
+
+    /**
      * 查询酒店房间列表
      *
      * @param hotelRooms 酒店房间

@@ -47,6 +47,28 @@ public class HotelRoomsController extends BaseController
     }
 
     /**
+     * 获取相应酒店的房间信息
+     * @return
+     */
+    @PreAuthorize("@ss.hasPermi('travels:rooms:list')")
+    @GetMapping(value = "/hotel/{hotelId}")
+    public AjaxResult getHotelRooms(@PathVariable("hotelId") Long hotelId)
+    {
+        return success(hotelRoomsService.selectHotelRoomsByHotelId(hotelId));
+    }
+
+    /**
+     * 获取相应酒店的最低价格
+     * @return
+     */
+    @PreAuthorize("@ss.hasPermi('travels:rooms:query')")
+    @GetMapping(value = "/price/{hotelId}")
+    public AjaxResult getMinPrice(@PathVariable("hotelId") Long hotelId)
+    {
+        return success(hotelRoomsService.selectHotelMinPriceByHotelId(hotelId));
+    }
+
+    /**
      * 导出酒店房间列表
      */
     @PreAuthorize("@ss.hasPermi('travels:rooms:export')")
