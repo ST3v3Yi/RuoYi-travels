@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHotelCommentsByHotelId" parameterType="Long" resultMap="HotelCommentsResult">
         select tb_hotel_comments.id, tb_hotel_comments.user_id, nick_name, avatar, tb_hotel_comments.hotel_id, room_id, room_name, order_id, main_rating, environment_rating, hygiene_rating, service_rating, facility_rating, content, tb_hotel_comments.img, tb_hotel_comments.create_time
         from tb_hotel_comments, sys_user, tb_hotel_rooms
-        where tb_hotel_comments.user_id = sys_user.user_id and tb_hotel_comments.room_id = tb_hotel_rooms.id and tb_hotel_comments.hotel_id = 1
+        where tb_hotel_comments.user_id = sys_user.user_id and tb_hotel_comments.room_id = tb_hotel_rooms.id and tb_hotel_comments.hotel_id = #{hotelId}
         ORDER BY id ASC;
     </select>
 
