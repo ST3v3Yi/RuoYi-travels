@@ -30,6 +30,23 @@ public interface HotelRoomsMapper
     public double selectHotelMinPriceByHotelId(Long hotelId);
 
     /**
+     * 获取具有对应房型的酒店ID
+     */
+    public List<HotelRooms> selectHotelIdByRoomType(Long type);
+
+    /**
+     *
+     * 贪心算法求得酒店可行性
+     * 第一步：
+     * 获取所有酒店ID => selectAllHotelId()【46】
+     * 第二步：
+     * 根据对应的HotelId查询Room信息 => selectHotelRoomsByHotelId(Long hotelId)【25】
+     *
+     */
+    public List<Long> selectAllHotelId();
+
+
+    /**
      * 查询酒店房间列表
      *
      * @param hotelRooms 酒店房间

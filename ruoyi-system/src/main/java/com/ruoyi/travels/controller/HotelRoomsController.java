@@ -1,22 +1,20 @@
 package com.ruoyi.travels.controller;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import org.junit.Test;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.travels.domain.HotelRooms;
+import com.ruoyi.travels.domain.RoomCriteria;
 import com.ruoyi.travels.service.IHotelRoomsService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -66,6 +64,68 @@ public class HotelRoomsController extends BaseController
     public AjaxResult getMinPrice(@PathVariable("hotelId") Long hotelId)
     {
         return success(hotelRoomsService.selectHotelMinPriceByHotelId(hotelId));
+    }
+
+    /**
+     * 获取具有对应房型的酒店ID
+     */
+    @PreAuthorize("@ss.hasPermi('travels:rooms:query')")
+    @GetMapping(value = "/room/{type}")
+    public AjaxResult getHotelId(@PathVariable("type") Long type)
+    {
+        return success(hotelRoomsService.selectHotelIdByRoomType(type));
+    }
+
+    /**
+     * 获取可行的Hotel ID
+     * 所谓可行是指可以符合筛选器中对于[房间数, 人数]要求的酒店
+     *
+     * 使用贪心算法，不求最优解，只求可行性
+     *
+     */
+    @PreAuthorize("@ss.hasPermi('travels:rooms:query')")
+    @PostMapping(value = "/feasibility")
+    public AjaxResult getHotelIdList(@RequestBody RoomCriteria roomCriteria)
+    {
+//        List<Long> Ids = null; // 定义一个Long数组用于保存可行的Hotel Id
+        // 第一步：获取所有的HotelId，并将其放置在HotelIds数组中
+        List<Long> hotelIds = hotelRoomsService.selectAllHotelId();
+        for (Long hotelId : hotelIds) {
+        // 第二步：依次查询对应hotel的room信息，并根据room的number大小进行排序【从大到小】
+            // 查询该酒店下的所有房间信息
+            List<HotelRooms> rooms = hotelRoomsService.selectHotelRoomsByHotelId(hotelId);
+            Boolean flag = false;
+            // 根据房间的容纳人数进行排序
+            Collections.sort(rooms, new Comparator<HotelRooms>() {
+                @Override
+                public int compare(HotelRooms r1, HotelRooms r2) {
+                    return (int) (r2.getNumber() - r1.getNumber());
+                }
+            });
+        // 第三步：通过贪心算法判定酒店是否可行
+            // 根据 roomCriteria.getRoomNumber() 和 roomCriteria.getPeopleNumber() 获取前端的筛选条件
+            /*Long roomNumber = roomCriteria.getRoomNumber();
+            Long peopleNumber = roomCriteria.getPeopleNumber();
+            for (HotelRooms room : rooms) {
+                Long minNumber = Math.min(roomNumber, room.getCounts());
+                if (minNumber * room.getNumber() >= peopleNumber) {
+                    flag = true;
+                    break;
+                } else if (minNumber.equals(roomNumber)) {
+                    break;
+                } else {
+                    roomNumber = roomNumber - minNumber;
+                    peopleNumber = peopleNumber - minNumber * room.getNumber();
+                    continue;
+                }
+            }
+            if (flag) {
+                Ids.add(hotelId);
+                break;
+            }*/
+        }
+//        System.out.println("Ids: " + Ids);
+        return success(hotelRoomsService.selectAllHotelId());
     }
 
     /**

@@ -48,6 +48,16 @@
         where hotel_id = #{hotelId};
     </select>
 
+    <select id="selectHotelIdByRoomType" parameterType="Long" resultType="Long">
+        select hotel_id
+        from tb_hotel_rooms
+        where type = #{type};
+    </select>
+
+    <select id="selectAllHotelId" resultType="Long">
+        select id from tb_hotel;
+    </select>
+
     <insert id="insertHotelRooms" parameterType="HotelRooms" useGeneratedKeys="true" keyProperty="id">
         insert into tb_hotel_rooms
         <trim prefix="(" suffix=")" suffixOverrides=",">

@@ -50,6 +50,26 @@ public class HotelRoomsServiceImpl implements IHotelRoomsService
     }
 
     /**
+     * 获取具有对应房型的酒店ID
+     */
+    @Override
+    public List<HotelRooms> selectHotelIdByRoomType(Long type) {
+        return hotelRoomsMapper.selectHotelIdByRoomType(type);
+    }
+
+    /**
+     *
+     * 贪心算法求得酒店可行性
+     * 第一步：
+     * 获取所有酒店ID
+     * getAllHotelId
+     *
+     */
+    public List<Long> selectAllHotelId() {
+        return hotelRoomsMapper.selectAllHotelId();
+    }
+
+    /**
      * 查询酒店房间列表
      *
      * @param hotelRooms 酒店房间
