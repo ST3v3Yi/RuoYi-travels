@@ -1,5 +1,6 @@
 package com.ruoyi.travels.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -87,13 +88,15 @@ public class HotelRoomsController extends BaseController
     @PostMapping(value = "/feasibility")
     public AjaxResult getHotelIdList(@RequestBody RoomCriteria roomCriteria)
     {
-//        List<Long> Ids = null; // 定义一个Long数组用于保存可行的Hotel Id
+        List<Long> Ids = new ArrayList<>(); // 定义一个Long数组用于保存可行的Hotel Id
         // 第一步：获取所有的HotelId，并将其放置在HotelIds数组中
         List<Long> hotelIds = hotelRoomsService.selectAllHotelId();
         for (Long hotelId : hotelIds) {
         // 第二步：依次查询对应hotel的room信息，并根据room的number大小进行排序【从大到小】
+            System.out.println("对于酒店 Hotel Id= " + hotelId);
             // 查询该酒店下的所有房间信息
             List<HotelRooms> rooms = hotelRoomsService.selectHotelRoomsByHotelId(hotelId);
+            System.out.println("该酒店共有：" + rooms.size() + "个房间");
             Boolean flag = false;
             // 根据房间的容纳人数进行排序
             Collections.sort(rooms, new Comparator<HotelRooms>() {
@@ -104,28 +107,34 @@ public class HotelRoomsController extends BaseController
             });
         // 第三步：通过贪心算法判定酒店是否可行
             // 根据 roomCriteria.getRoomNumber() 和 roomCriteria.getPeopleNumber() 获取前端的筛选条件
-            /*Long roomNumber = roomCriteria.getRoomNumber();
+            Long roomNumber = roomCriteria.getRoomNumber();
             Long peopleNumber = roomCriteria.getPeopleNumber();
+            System.out.println("而前端传回的需求分别为 => 房间数为：" + roomNumber + "， 人数为：" + peopleNumber);
             for (HotelRooms room : rooms) {
+                System.out.println("对于酒店 Hotel Id=" + hotelId + " 的房间”" + room.getRoomName() + "“而言");
+                System.out.println("其房间剩余数为：" + room.getCounts() + "，房间容纳人数为：" + room.getNumber());
                 Long minNumber = Math.min(roomNumber, room.getCounts());
+                System.out.println("在同需求房间数比较后，得到最小房间数为：" + minNumber);
                 if (minNumber * room.getNumber() >= peopleNumber) {
+                    System.out.println("条件一成立，该酒店可行！");
                     flag = true;
                     break;
                 } else if (minNumber.equals(roomNumber)) {
+                    System.out.println("条件二成立，该酒店不可行！");
                     break;
                 } else {
                     roomNumber = roomNumber - minNumber;
                     peopleNumber = peopleNumber - minNumber * room.getNumber();
+                    System.out.println("条件三成立，剩余需求房间数为：" + roomNumber + "，剩余需求人数为：" + peopleNumber);
                     continue;
                 }
             }
             if (flag) {
                 Ids.add(hotelId);
-                break;
-            }*/
+            }
         }
-//        System.out.println("Ids: " + Ids);
-        return success(hotelRoomsService.selectAllHotelId());
+        System.out.println("Ids: " + Ids);
+        return success(Ids);
     }
 
     /**
