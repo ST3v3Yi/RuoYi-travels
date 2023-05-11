@@ -28,6 +28,11 @@ public interface IHotelService
     public List<Hotel> selectHotelList(Hotel hotel);
 
     /**
+     * 随机获取一个酒店
+     */
+    public Hotel selectRandomHotel();
+
+    /**
      * 新增酒店管理
      * 
      * @param hotel 酒店管理

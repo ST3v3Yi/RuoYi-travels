@@ -2,7 +2,8 @@ package com.ruoyi.travels.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
-import io.lettuce.core.dynamic.annotation.Param;
+import com.ruoyi.travels.domain.RecRoute;
+import com.ruoyi.travels.domain.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.travels.mapper.RouteMapper;
@@ -72,6 +73,43 @@ public class RouteServiceImpl implements IRouteService
     public List<Route> selectRouteByPrice(Route route)
     {
         return routeMapper.selectRouteByPrice(route);
+    }
+
+    /**
+     * 获取待推荐路线信息
+     */
+    @Override
+    public List<RecRoute> selectRecRoute()
+    {
+        return routeMapper.selectRecRoute();
+    }
+
+    /**
+     * 获取最大Id
+     */
+    @Override
+    public Long selectMAXId()
+    {
+        return routeMapper.selectMAXId();
+    }
+
+    /**
+     * 获取当前用户近30天的路线浏览及互动信息
+     * @return
+     */
+    @Override
+    public List<Record> selectRecordAboutRouteByUserId(Long userId)
+    {
+        return routeMapper.selectRecordAboutRouteByUserId(userId);
+    }
+
+    /**
+     * 获取相应用户的路线攻略
+     */
+    @Override
+    public List<Route> selectRouteByUserId(Route route)
+    {
+        return routeMapper.selectRouteByUserId(route);
     }
 
     /**

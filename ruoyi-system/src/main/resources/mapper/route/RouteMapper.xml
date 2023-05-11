@@ -25,6 +25,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="isDeleted"    column="is_deleted"    />
     </resultMap>
 
+    <resultMap type="RecRoute" id="RecRouteResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="coverImg"    column="cover_img"    />
+        <result property="counts"    column="counts"    />
+        <result property="releaseTime"    column="release_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+        <result property="commentsCount"    column="comments_count" />
+        <result property="replyCount"    column="reply_count" />
+    </resultMap>
+
+    <resultMap id="RecordResult" type="Record">
+        <result property="userId"    column="user_id"    />
+        <result property="type"    column="type"    />
+        <result property="routeId"    column="route_id"    />
+        <result property="counts"    column="counts"    />
+        <result property="isFavorite"    column="is_favorite"    />
+        <result property="rating"    column="rating"    />
+        <result property="tags"    column="tags" />
+    </resultMap>
+
     <sql id="selectRouteVo">
         select id, title, cover_img, counts, release_time, day, cost, user_id, user_name, dept_id, dept_name, create_time, update_time, introduction, content, status, is_deleted from tb_route
     </sql>
@@ -74,6 +95,75 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectRouteById" parameterType="Long" resultMap="RouteResult">
         <include refid="selectRouteVo"/>
         where id = #{id}
+    </select>
+
+    <select id="selectRecRoute" resultMap="RecRouteResult">
+        /*通过 LEFT JOIN 将 tb_route 表、tb_route_comments 表和 tb_route_reply 表关联起来，
+          使用 GROUP BY 子句将查询结果按照 tb_route 表的 id 列进行分组。使用 COUNT(tb_route_comments.id) 计算每条路线攻略的评论数量，
+          并使用 COALESCE(SUM(tb_route_reply.reply_count), 0) 计算每条评论的回复数量。
+          如果某个评论没有回复，可以使用 COALESCE 函数将 NULL 值转换成 0。*/
+        SELECT
+            tb_route.*,
+            COUNT(tb_route_comments.id) AS comments_count,
+            COALESCE(SUM(tb_route_reply.reply_count), 0) AS reply_count
+        FROM
+            tb_route
+                LEFT JOIN
+            tb_route_comments
+            ON
+                tb_route.id = tb_route_comments.route_id
+                LEFT JOIN
+            (SELECT
+                 tb_route_comments.id AS comment_id,
+                 COUNT(tb_route_reply.id) AS reply_count
+             FROM
+                 tb_route_comments
+                     LEFT JOIN
+                 tb_route_reply
+                 ON
+                     tb_route_comments.id = tb_route_reply.comment_id
+             GROUP BY
+                 tb_route_comments.id) AS tb_route_reply
+            ON
+                tb_route_comments.id = tb_route_reply.comment_id
+        WHERE
+            tb_route.is_deleted = 0
+        GROUP BY
+            tb_route.id
+    </select>
+
+    <select id="selectMAXId" resultType="Long">
+        select MAX(id) from tb_route
+    </select>
+
+    <select id="selectRecordAboutRouteByUserId" parameterType="Long" resultMap="RecordResult">
+        SELECT
+            tb_user_records.user_id,
+            tb_user_records.type,
+            tb_user_records.route_id,
+            COUNT(*) AS counts,
+            IF(tb_route_favorite.route_id IS NOT NULL, true, false) AS is_favorite,
+            IFNULL(tb_route_rating.rating, 0) AS rating,
+            GROUP_CONCAT(tb_route_tag.tag SEPARATOR ',') AS tags
+        FROM tb_user_records
+                 LEFT JOIN tb_route_favorite
+                           ON tb_user_records.route_id = tb_route_favorite.route_id
+                               AND tb_user_records.user_id = tb_route_favorite.user_id
+                 LEFT JOIN tb_route_rating
+                           ON tb_user_records.route_id = tb_route_rating.route_id
+                               AND tb_user_records.user_id = tb_route_rating.user_id
+                 LEFT JOIN tb_route_tag
+                           ON tb_user_records.route_id = tb_route_tag.route_id
+        WHERE tb_user_records.type = 1 AND tb_user_records.user_id = #{userId}
+        GROUP BY tb_user_records.user_id, tb_user_records.type, tb_user_records.route_id
+    </select>
+
+    <select id="selectRouteByUserId" parameterType="Route" resultMap="RouteResult">
+        SELECT * FROM tb_route
+        <where>
+            user_id = #{userId}
+        </where>
+        ORDER BY id DESC
     </select>
         
     <insert id="insertRoute" parameterType="Route" useGeneratedKeys="true" keyProperty="id">

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.travels.mapper.AroundMapper">
+    
+    <resultMap type="Around" id="AroundResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="spotId1"    column="spot_id1"    />
+        <result property="spotId2"    column="spot_id2"    />
+        <result property="hotelId"    column="hotel_id"    />
+        <result property="distance"    column="distance"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectAroundVo">
+        select id, type, spot_id1, spot_id2, hotel_id, distance, create_time from tb_around
+    </sql>
+
+    <select id="selectAroundList" parameterType="Around" resultMap="AroundResult">
+        <include refid="selectAroundVo"/>
+        <where>  
+            <if test="type != null "> and type = #{type}</if>
+            <if test="spotId1 != null "> and spot_id1 = #{spotId1}</if>
+            <if test="spotId2 != null "> and spot_id2 = #{spotId2}</if>
+            <if test="hotelId != null "> and hotel_id = #{hotelId}</if>
+        </where>
+    </select>
+    
+    <select id="selectAroundById" parameterType="Long" resultMap="AroundResult">
+        <include refid="selectAroundVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAround" parameterType="Around" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_around
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="spotId1 != null">spot_id1,</if>
+            <if test="spotId2 != null">spot_id2,</if>
+            <if test="hotelId != null">hotel_id,</if>
+            <if test="distance != null">distance,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="spotId1 != null">#{spotId1},</if>
+            <if test="spotId2 != null">#{spotId2},</if>
+            <if test="hotelId != null">#{hotelId},</if>
+            <if test="distance != null">#{distance},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAround" parameterType="Around">
+        update tb_around
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="spotId1 != null">spot_id1 = #{spotId1},</if>
+            <if test="spotId2 != null">spot_id2 = #{spotId2},</if>
+            <if test="hotelId != null">hotel_id = #{hotelId},</if>
+            <if test="distance != null">distance = #{distance},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAroundById" parameterType="Long">
+        delete from tb_around where id = #{id}
+    </delete>
+
+    <delete id="deleteAroundByIds" parameterType="String">
+        delete from tb_around where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

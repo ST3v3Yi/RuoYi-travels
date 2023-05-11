@@ -45,6 +45,15 @@ public class HotelServiceImpl implements IHotelService
     }
 
     /**
+     * 随机获取一个酒店
+     */
+    @Override
+    public Hotel selectRandomHotel()
+    {
+        return hotelMapper.selectRandomHotel();
+    }
+
+    /**
      * 新增酒店管理
      * 
      * @param hotel 酒店管理

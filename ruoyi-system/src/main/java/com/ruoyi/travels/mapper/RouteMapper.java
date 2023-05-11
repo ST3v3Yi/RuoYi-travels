@@ -1,6 +1,9 @@
 package com.ruoyi.travels.mapper;
 
 import java.util.List;
+
+import com.ruoyi.travels.domain.RecRoute;
+import com.ruoyi.travels.domain.Record;
 import com.ruoyi.travels.domain.Route;
 import io.lettuce.core.dynamic.annotation.Param;
 
@@ -44,6 +47,26 @@ public interface RouteMapper
      * 获取相应花费限制内的列表
      */
     public List<Route> selectRouteByPrice(Route route);
+
+    /**
+     * 获取待推荐路线信息
+     */
+    public List<RecRoute> selectRecRoute();
+
+    /**
+     * 查询最大id
+     */
+    public Long selectMAXId();
+
+    /**
+     * 获取当前用户近30天的路线浏览及互动信息
+     */
+    public List<Record> selectRecordAboutRouteByUserId(Long userId);
+
+    /**
+     * 获取相应用户的路线攻略
+     */
+    public List<Route> selectRouteByUserId(Route route);
 
     /**
      * 新增路线

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.travels.mapper.UserRecordsMapper">
+    
+    <resultMap type="UserRecords" id="UserRecordsResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="type"    column="type"    />
+        <result property="spotId"    column="spot_id"    />
+        <result property="routeId"    column="route_id"    />
+        <result property="hotelId"    column="hotel_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectUserRecordsVo">
+        select id, user_id, type, spot_id, route_id, hotel_id, create_time from tb_user_records
+    </sql>
+
+    <select id="selectUserRecordsList" parameterType="UserRecords" resultMap="UserRecordsResult">
+        <include refid="selectUserRecordsVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="spotId != null "> and spot_id = #{spotId}</if>
+            <if test="routeId != null "> and route_id = #{routeId}</if>
+            <if test="hotelId != null "> and hotel_id = #{hotelId}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserRecordsById" parameterType="Long" resultMap="UserRecordsResult">
+        <include refid="selectUserRecordsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUserRecords" parameterType="UserRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_user_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="type != null">type,</if>
+            <if test="spotId != null">spot_id,</if>
+            <if test="routeId != null">route_id,</if>
+            <if test="hotelId != null">hotel_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="spotId != null">#{spotId},</if>
+            <if test="routeId != null">#{routeId},</if>
+            <if test="hotelId != null">#{hotelId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserRecords" parameterType="UserRecords">
+        update tb_user_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="spotId != null">spot_id = #{spotId},</if>
+            <if test="routeId != null">route_id = #{routeId},</if>
+            <if test="hotelId != null">hotel_id = #{hotelId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserRecordsById" parameterType="Long">
+        delete from tb_user_records where id = #{id}
+    </delete>
+
+    <delete id="deleteUserRecordsByIds" parameterType="String">
+        delete from tb_user_records where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
