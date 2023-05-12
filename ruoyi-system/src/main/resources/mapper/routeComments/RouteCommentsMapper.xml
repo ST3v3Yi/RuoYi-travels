@@ -22,6 +22,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="avatar"    column="avatar"    />
     </resultMap>
 
+    <resultMap id="UserRouteCommentsResult" type="UserRouteComments">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="routeId"    column="route_id"    />
+        <result property="content"    column="content"    />
+        <result property="title"    column="title"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
     <sql id="selectRouteCommentsVo">
         select id, user_id, route_id, content, create_time from tb_route_comments
     </sql>
@@ -46,6 +55,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectRouteCommentsById" parameterType="Long" resultMap="RouteCommentsResult">
         <include refid="selectRouteCommentsVo"/>
         where id = #{id}
+    </select>
+
+    <select id="selectRouteCommentsByUserId" parameterType="Long" resultMap="UserRouteCommentsResult">
+        SELECT c.*, r.title
+        FROM tb_route_comments c
+                 JOIN tb_route r ON c.route_id = r.id
+        WHERE c.user_id = #{userId};
+    </select>
+
+    <select id="selectRouteCommentsNumByUserId" parameterType="Long" resultType="integer">
+        select COUNT(*)
+        from tb_route_comments
+        where user_id = #{userId}
     </select>
         
     <insert id="insertRouteComments" parameterType="RouteComments" useGeneratedKeys="true" keyProperty="id">

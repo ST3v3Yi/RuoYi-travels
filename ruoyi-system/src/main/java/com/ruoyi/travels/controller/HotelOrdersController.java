@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 酒店订单Controller
  * 
  * @author Yifun
- * @date 2023-05-07
+ * @date 2023-05-12
  */
 @RestController
 @RequestMapping("/hotel/orders")
@@ -67,6 +67,16 @@ public class HotelOrdersController extends BaseController
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
         return success(hotelOrdersService.selectHotelOrdersById(id));
+    }
+
+    /**
+     * 获取个人订单信息
+     */
+    @PreAuthorize("@ss.hasPermi('hotel:orders:query')")
+    @GetMapping(value = "/hotel/{userId}")
+    public AjaxResult getUserOrders(@PathVariable("userId") Long userId)
+    {
+        return success(hotelOrdersService.selectHotelOrdersByUserId(userId));
     }
 
     /**

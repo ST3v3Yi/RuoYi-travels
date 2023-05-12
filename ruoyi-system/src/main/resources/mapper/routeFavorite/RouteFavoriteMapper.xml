@@ -10,6 +10,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
     </resultMap>
 
+    <resultMap type="UserRouteFavorite" id="UserRouteFavoriteResult">
+        <result property="userId"    column="user_id"    />
+        <result property="routeId"    column="route_id"    />
+        <result property="title"    column="title"    />
+        <result property="coverImg"    column="cover_img"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
     <sql id="selectRouteFavoriteVo">
         select user_id, route_id, create_time from tb_route_favorite
     </sql>
@@ -29,6 +37,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectIsFavorite" parameterType="RouteFavorite" resultType="Boolean">
         select exists (select * from tb_route_favorite where user_id = #{userId} and route_id = #{routeId}) AS result
+    </select>
+
+    <select id="selectFavoriteRouteByUserId" parameterType="Long" resultMap="UserRouteFavoriteResult">
+        SELECT
+            f.*,
+            r.title,
+            r.cover_img
+        FROM
+            tb_route_favorite AS f
+                INNER JOIN tb_route AS r ON f.route_id = r.id
+        WHERE
+            f.user_id = #{userId}
     </select>
         
     <insert id="insertRouteFavorite" parameterType="RouteFavorite">

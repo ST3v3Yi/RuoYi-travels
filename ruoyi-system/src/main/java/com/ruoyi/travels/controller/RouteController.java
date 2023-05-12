@@ -74,18 +74,6 @@ public class RouteController extends BaseController
     }
 
     /**
-     * 获取相应用户的路线攻略
-     */
-    @PreAuthorize("@ss.hasPermi('route:route:list')")
-    @GetMapping(value = "/user")
-    public TableDataInfo getUserRoute(Route route)
-    {
-        startPage();
-        List<Route> list = routeService.selectRouteByUserId(route);
-        return getDataTable(list);
-    }
-
-    /**
      * 获取相应天数限制内的列表
      */
     @PreAuthorize("@ss.hasPermi('route:route:list')")
@@ -113,6 +101,26 @@ public class RouteController extends BaseController
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
         return success(routeService.selectRouteById(id));
+    }
+
+    /**
+     * 获取相应用户的路线攻略
+     */
+    @PreAuthorize("@ss.hasPermi('route:route:query')")
+    @GetMapping(value = "/user/{userId}")
+    public AjaxResult getUserRoute(@PathVariable("userId") Long userId)
+    {
+        return success(routeService.selectRouteByUserId(userId));
+    }
+
+    /**
+     * 获取用户路线数量
+     */
+    @PreAuthorize("@ss.hasPermi('route:route:query')")
+    @GetMapping(value = "/userRoute/{userId}")
+    public AjaxResult getUserRouteNum(@PathVariable("userId") Long userId)
+    {
+        return success(routeService.selectRouteNumByUserId(userId));
     }
 
     /**

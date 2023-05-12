@@ -82,6 +82,16 @@ public class SpotFavoriteController extends BaseController
     }
 
     /**
+     * 获取用户收藏景点信息
+     */
+    @PreAuthorize("@ss.hasPermi('spotFavorite:spotFavorite:query')")
+    @GetMapping(value = "/spot/{userId}")
+    public AjaxResult getUserFavorite(@PathVariable("userId") Long userId)
+    {
+        return success(spotFavoriteService.selectFavoriteSpotByUserId(userId));
+    }
+
+    /**
      * 新增景区收藏
      */
     @PreAuthorize("@ss.hasPermi('spotFavorite:spotFavorite:add')")

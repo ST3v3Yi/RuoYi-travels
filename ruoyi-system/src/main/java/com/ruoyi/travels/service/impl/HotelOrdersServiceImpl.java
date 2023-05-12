@@ -2,6 +2,7 @@ package com.ruoyi.travels.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.travels.domain.UserOrders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.travels.mapper.HotelOrdersMapper;
@@ -12,7 +13,7 @@ import com.ruoyi.travels.service.IHotelOrdersService;
  * 酒店订单Service业务层处理
  * 
  * @author Yifun
- * @date 2023-05-07
+ * @date 2023-05-12
  */
 @Service
 public class HotelOrdersServiceImpl implements IHotelOrdersService 
@@ -42,6 +43,15 @@ public class HotelOrdersServiceImpl implements IHotelOrdersService
     public List<HotelOrders> selectHotelOrdersList(HotelOrders hotelOrders)
     {
         return hotelOrdersMapper.selectHotelOrdersList(hotelOrders);
+    }
+
+    /**
+     * 获取个人订单信息
+     */
+    @Override
+    public List<UserOrders> selectHotelOrdersByUserId(Long userId)
+    {
+        return hotelOrdersMapper.selectHotelOrdersByUserId(userId);
     }
 
     /**

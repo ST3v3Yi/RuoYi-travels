@@ -2,6 +2,7 @@ package com.ruoyi.travels.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.travels.domain.UserRouteFavorite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.travels.mapper.RouteFavoriteMapper;
@@ -49,6 +50,15 @@ public class RouteFavoriteServiceImpl implements IRouteFavoriteService
     public Boolean selectIsFavorite(RouteFavorite routeFavorite)
     {
         return routeFavoriteMapper.selectIsFavorite(routeFavorite);
+    }
+
+    /**
+     * 获取用户收藏路线信息
+     */
+    @Override
+    public List<UserRouteFavorite> selectFavoriteRouteByUserId(Long userId)
+    {
+        return routeFavoriteMapper.selectFavoriteRouteByUserId(userId);
     }
 
     /**

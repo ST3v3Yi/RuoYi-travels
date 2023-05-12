@@ -73,6 +73,16 @@ public class RouteFavoriteController extends BaseController
     }
 
     /**
+     * 获取用户收藏路线信息
+     */
+    @PreAuthorize("@ss.hasPermi('routeFavorite:routeFavorite:query')")
+    @GetMapping(value = "/route/{userId}")
+    public AjaxResult getUserFavorite(@PathVariable("userId") Long userId)
+    {
+        return success(routeFavoriteService.selectFavoriteRouteByUserId(userId));
+    }
+
+    /**
      * 新增路线收藏
      */
     @PreAuthorize("@ss.hasPermi('routeFavorite:routeFavorite:add')")

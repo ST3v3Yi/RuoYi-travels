@@ -107,9 +107,18 @@ public class RouteServiceImpl implements IRouteService
      * 获取相应用户的路线攻略
      */
     @Override
-    public List<Route> selectRouteByUserId(Route route)
+    public List<Route> selectRouteByUserId(Long userId)
     {
-        return routeMapper.selectRouteByUserId(route);
+        return routeMapper.selectRouteByUserId(userId);
+    }
+
+    /**
+     * 获取用户路线数量
+     */
+    @Override
+    public Integer selectRouteNumByUserId(Long userId)
+    {
+        return routeMapper.selectRouteNumByUserId(userId);
     }
 
     /**

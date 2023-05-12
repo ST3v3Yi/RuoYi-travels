@@ -14,6 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="ownerId"    column="owner_id"    />
         <result property="roomId"    column="room_id"    />
         <result property="roomNumber"    column="room_number"    />
+        <result property="fromDate"    column="from_date"    />
+        <result property="toDate"    column="to_date"    />
         <result property="arrivalTime"    column="arrival_time"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
@@ -21,17 +23,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="price"    column="price"    />
     </resultMap>
 
+    <resultMap type="UserOrders" id="UserOrdersResult">
+        <result property="id"    column="id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="email"    column="email"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="roomNumber"    column="room_number"    />
+        <result property="fromDate"    column="from_date"    />
+        <result property="toDate"    column="to_date"    />
+        <result property="arrivalTime"    column="arrival_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="status"    column="status"    />
+        <result property="price"    column="price"    />
+        <result property="hotelName"    column="hotel_name"    />
+        <result property="coverImg"    column="cover_img"    />
+        <result property="roomName"    column="room_name"    />
+    </resultMap>
+
     <sql id="selectHotelOrdersVo">
-        select id, user_id, user_name, email, telephone, hotel_id, owner_id, room_id, room_number, arrival_time, create_time, update_time, status, price from tb_hotel_orders
+        select id, user_id, user_name, email, telephone, hotel_id, owner_id, room_id, room_number, from_date, to_date, arrival_time, create_time, update_time, status, price from tb_hotel_orders
     </sql>
 
     <select id="selectHotelOrdersList" parameterType="HotelOrders" resultMap="HotelOrdersResult">
         <include refid="selectHotelOrdersVo"/>
         <where>  
-            <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="hotelId != null "> and hotel_id = #{hotelId}</if>
-            <if test="ownerId != null "> and owner_id = #{ownerId}</if>
-            <if test="roomId != null "> and room_id = #{roomId}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
             <if test="status != null "> and status = #{status}</if>
         </where>
     </select>
@@ -39,6 +56,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectHotelOrdersById" parameterType="Long" resultMap="HotelOrdersResult">
         <include refid="selectHotelOrdersVo"/>
         where id = #{id}
+    </select>
+
+    <select id="selectHotelOrdersByUserId" parameterType="Long" resultMap="UserOrdersResult">
+        SELECT ho.id, ho.user_name, ho.email, ho.telephone, ho.room_number, ho.from_date, ho.to_date, ho.arrival_time, ho.`status`, ho.price,
+               h.hotel_name, h.cover_img,
+               hr.room_name
+        FROM tb_hotel_orders ho
+                 INNER JOIN tb_hotel h ON ho.hotel_id = h.id
+                 INNER JOIN tb_hotel_rooms hr ON ho.room_id = hr.id
+        WHERE ho.user_id = #{userId}
     </select>
         
     <insert id="insertHotelOrders" parameterType="HotelOrders" useGeneratedKeys="true" keyProperty="id">
@@ -52,6 +79,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ownerId != null">owner_id,</if>
             <if test="roomId != null">room_id,</if>
             <if test="roomNumber != null">room_number,</if>
+            <if test="fromDate != null">from_date,</if>
+            <if test="toDate != null">to_date,</if>
             <if test="arrivalTime != null">arrival_time,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
@@ -67,6 +96,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ownerId != null">#{ownerId},</if>
             <if test="roomId != null">#{roomId},</if>
             <if test="roomNumber != null">#{roomNumber},</if>
+            <if test="fromDate != null">#{fromDate},</if>
+            <if test="toDate != null">#{toDate},</if>
             <if test="arrivalTime != null">#{arrivalTime},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
@@ -86,6 +117,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ownerId != null">owner_id = #{ownerId},</if>
             <if test="roomId != null">room_id = #{roomId},</if>
             <if test="roomNumber != null">room_number = #{roomNumber},</if>
+            <if test="fromDate != null">from_date = #{fromDate},</if>
+            <if test="toDate != null">to_date = #{toDate},</if>
             <if test="arrivalTime != null">arrival_time = #{arrivalTime},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>

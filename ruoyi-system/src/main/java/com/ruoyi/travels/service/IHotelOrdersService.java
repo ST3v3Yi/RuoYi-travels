@@ -2,12 +2,13 @@ package com.ruoyi.travels.service;
 
 import java.util.List;
 import com.ruoyi.travels.domain.HotelOrders;
+import com.ruoyi.travels.domain.UserOrders;
 
 /**
  * 酒店订单Service接口
  * 
  * @author Yifun
- * @date 2023-05-07
+ * @date 2023-05-12
  */
 public interface IHotelOrdersService 
 {
@@ -26,6 +27,11 @@ public interface IHotelOrdersService
      * @return 酒店订单集合
      */
     public List<HotelOrders> selectHotelOrdersList(HotelOrders hotelOrders);
+
+    /**
+     * 获取个人订单信息
+     */
+    public List<UserOrders> selectHotelOrdersByUserId(Long userId);
 
     /**
      * 新增酒店订单

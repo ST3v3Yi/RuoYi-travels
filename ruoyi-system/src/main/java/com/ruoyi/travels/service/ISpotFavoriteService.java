@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoyi.travels.domain.RouteFavorite;
 import com.ruoyi.travels.domain.SpotFavorite;
+import com.ruoyi.travels.domain.UserSpotFavorite;
 
 /**
  * 景区收藏Service接口
@@ -33,6 +34,11 @@ public interface ISpotFavoriteService
      * 获取用户是否收藏景点
      */
     public Boolean selectIsFavorite(SpotFavorite spotFavorite);
+
+    /**
+     * 获取用户收藏景点信息
+     */
+    public List<UserSpotFavorite> selectFavoriteSpotByUserId(Long userId);
 
     /**
      * 新增景区收藏

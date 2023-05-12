@@ -12,7 +12,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 酒店订单对象 tb_hotel_orders
  * 
  * @author Yifun
- * @date 2023-05-07
+ * @date 2023-05-12
  */
 public class HotelOrders extends BaseEntity
 {
@@ -26,12 +26,14 @@ public class HotelOrders extends BaseEntity
     private Long userId;
 
     /** 住客姓名 */
+    @Excel(name = "住客姓名")
     private String userName;
 
     /** 用户邮箱 */
     private String email;
 
     /** 用户电话 */
+    @Excel(name = "用户电话")
     private String telephone;
 
     /** 酒店id */
@@ -39,7 +41,6 @@ public class HotelOrders extends BaseEntity
     private Long hotelId;
 
     /** 酒店方id */
-    @Excel(name = "酒店方id")
     private Long ownerId;
 
     /** 房间id */
@@ -50,10 +51,19 @@ public class HotelOrders extends BaseEntity
     @Excel(name = "房间数")
     private Long roomNumber;
 
-    /** 到店时间 */
+    /** 入住日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "到店时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date arrivalTime;
+    @Excel(name = "入住日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fromDate;
+
+    /** 离店日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "离店日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date toDate;
+
+    /** 到店时间 */
+    @Excel(name = "到店时间")
+    private String arrivalTime;
 
     /** 订单状态 */
     @Excel(name = "订单状态")
@@ -144,12 +154,30 @@ public class HotelOrders extends BaseEntity
     {
         return roomNumber;
     }
-    public void setArrivalTime(Date arrivalTime) 
+    public void setFromDate(Date fromDate) 
+    {
+        this.fromDate = fromDate;
+    }
+
+    public Date getFromDate() 
+    {
+        return fromDate;
+    }
+    public void setToDate(Date toDate) 
+    {
+        this.toDate = toDate;
+    }
+
+    public Date getToDate() 
+    {
+        return toDate;
+    }
+    public void setArrivalTime(String arrivalTime) 
     {
         this.arrivalTime = arrivalTime;
     }
 
-    public Date getArrivalTime() 
+    public String getArrivalTime() 
     {
         return arrivalTime;
     }
@@ -184,6 +212,8 @@ public class HotelOrders extends BaseEntity
             .append("ownerId", getOwnerId())
             .append("roomId", getRoomId())
             .append("roomNumber", getRoomNumber())
+            .append("fromDate", getFromDate())
+            .append("toDate", getToDate())
             .append("arrivalTime", getArrivalTime())
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())

@@ -158,12 +158,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         GROUP BY tb_user_records.user_id, tb_user_records.type, tb_user_records.route_id
     </select>
 
-    <select id="selectRouteByUserId" parameterType="Route" resultMap="RouteResult">
+    <select id="selectRouteByUserId" parameterType="Long" resultMap="RouteResult">
         SELECT * FROM tb_route
         <where>
             user_id = #{userId}
         </where>
         ORDER BY id DESC
+    </select>
+
+    <select id="selectRouteNumByUserId" parameterType="Long" resultType="integer">
+        select COUNT(*)
+        from tb_route
+        where user_id = #{userId}
     </select>
         
     <insert id="insertRoute" parameterType="Route" useGeneratedKeys="true" keyProperty="id">

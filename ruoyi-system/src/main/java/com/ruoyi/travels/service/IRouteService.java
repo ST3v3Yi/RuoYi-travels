@@ -66,7 +66,12 @@ public interface IRouteService
     /**
      * 获取相应用户的路线攻略
      */
-    public List<Route> selectRouteByUserId(Route route);
+    public List<Route> selectRouteByUserId(Long userId);
+
+    /**
+     * 获取用户路线数量
+     */
+    public Integer selectRouteNumByUserId(Long userId);
 
     /**
      * 新增路线

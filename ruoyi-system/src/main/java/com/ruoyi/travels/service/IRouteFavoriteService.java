@@ -2,6 +2,7 @@ package com.ruoyi.travels.service;
 
 import java.util.List;
 import com.ruoyi.travels.domain.RouteFavorite;
+import com.ruoyi.travels.domain.UserRouteFavorite;
 
 /**
  * 路线收藏Service接口
@@ -31,6 +32,11 @@ public interface IRouteFavoriteService
      * 获取用户是否收藏路线
      */
     public Boolean selectIsFavorite(RouteFavorite routeFavorite);
+
+    /**
+     * 获取用户收藏路线信息
+     */
+    public List<UserRouteFavorite> selectFavoriteRouteByUserId(Long userId);
 
     /**
      * 新增路线收藏

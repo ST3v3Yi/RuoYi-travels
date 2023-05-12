@@ -2,6 +2,7 @@ package com.ruoyi.travels.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.travels.domain.UserRouteComments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.travels.mapper.RouteCommentsMapper;
@@ -51,6 +52,22 @@ public class RouteCommentsServiceImpl implements IRouteCommentsService
     public List<RouteComments> selectRouteCommentsListByRouteId(Long routeId)
     {
         return routeCommentsMapper.selectRouteCommentsListByRouteId(routeId);
+    }
+
+    /**
+     * 获取相应用户的评论
+     */
+    public List<UserRouteComments> selectRouteCommentsByUserId(Long userId)
+    {
+        return routeCommentsMapper.selectRouteCommentsByUserId(userId);
+    }
+
+    /**
+     * 获取用户评论数量
+     */
+    public Integer selectRouteCommentsNumByUserId(Long userId)
+    {
+        return routeCommentsMapper.selectRouteCommentsNumByUserId(userId);
     }
 
     /**

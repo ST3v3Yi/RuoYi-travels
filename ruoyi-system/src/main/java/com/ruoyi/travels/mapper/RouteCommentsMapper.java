@@ -2,6 +2,7 @@ package com.ruoyi.travels.mapper;
 
 import java.util.List;
 import com.ruoyi.travels.domain.RouteComments;
+import com.ruoyi.travels.domain.UserRouteComments;
 
 /**
  * 路线评论Mapper接口
@@ -31,6 +32,16 @@ public interface RouteCommentsMapper
      * 获取指定路线的评论列表 List
      */
     public List<RouteComments> selectRouteCommentsListByRouteId(Long routeId);
+
+    /**
+     * 获取相应用户的评论
+     */
+    public List<UserRouteComments> selectRouteCommentsByUserId(Long userId);
+
+    /**
+     * 获取用户评论数量
+     */
+    public Integer selectRouteCommentsNumByUserId(Long userId);
 
     /**
      * 新增路线评论

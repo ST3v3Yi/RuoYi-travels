@@ -80,6 +80,26 @@ public class RouteCommentsController extends BaseController
     }
 
     /**
+     * 获取相应用户的评论
+     */
+    @PreAuthorize("@ss.hasPermi('routeComments:routeComments:query')")
+    @GetMapping("/user/{userId}")
+    public AjaxResult getUserComments(@PathVariable("userId") Long userId)
+    {
+        return success(routeCommentsService.selectRouteCommentsByUserId(userId));
+    }
+
+    /**
+     * 获取用户评论数量
+     */
+    @PreAuthorize("@ss.hasPermi('routeComments:routeComments:query')")
+    @GetMapping("/userComments/{userId}")
+    public AjaxResult getUserCommentsNum(@PathVariable("userId") Long userId)
+    {
+        return success(routeCommentsService.selectRouteCommentsNumByUserId(userId));
+    }
+
+    /**
      * 新增路线评论
      */
     @PreAuthorize("@ss.hasPermi('routeComments:routeComments:add')")
@@ -106,7 +126,7 @@ public class RouteCommentsController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('routeComments:routeComments:remove')")
     @Log(title = "路线评论", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+	@DeleteMapping("/del/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(routeCommentsService.deleteRouteCommentsByIds(ids));

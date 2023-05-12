@@ -10,6 +10,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
     </resultMap>
 
+    <resultMap type="UserSpotFavorite" id="UserSpotFavoriteResult">
+        <result property="userId"    column="user_id"    />
+        <result property="spotId"    column="spot_id"    />
+        <result property="spotName"    column="spot_name"    />
+        <result property="spotForeignName"    column="spot_foreign_name"    />
+        <result property="coverImg"    column="cover_img"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
     <sql id="selectSpotFavoriteVo">
         select user_id, spot_id, create_time from tb_spot_favorite
     </sql>
@@ -27,6 +36,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectIsFavorite" parameterType="SpotFavorite" resultType="Boolean">
         select exists (select * from tb_spot_favorite where user_id = #{userId} and spot_id = #{spotId}) AS result
+    </select>
+
+    <select id="selectFavoriteSpotByUserId" parameterType="Long" resultMap="UserSpotFavoriteResult">
+        SELECT
+            f.*,
+            s.spot_name,
+            s.spot_foreign_name,
+            s.cover_img
+        FROM
+            tb_spot_favorite AS f
+                INNER JOIN tb_spot AS s ON f.spot_id = s.id
+        WHERE
+            f.user_id = #{userId}
     </select>
         
     <insert id="insertSpotFavorite" parameterType="SpotFavorite">

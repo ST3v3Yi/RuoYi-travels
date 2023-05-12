@@ -3,6 +3,7 @@ package com.ruoyi.travels.service.impl;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.travels.domain.RouteFavorite;
+import com.ruoyi.travels.domain.UserSpotFavorite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.travels.mapper.SpotFavoriteMapper;
@@ -50,6 +51,15 @@ public class SpotFavoriteServiceImpl implements ISpotFavoriteService
     public Boolean selectIsFavorite(SpotFavorite spotFavorite)
     {
         return spotFavoriteMapper.selectIsFavorite(spotFavorite);
+    }
+
+    /**
+     * 获取用户收藏景点信息
+     */
+    @Override
+    public List<UserSpotFavorite> selectFavoriteSpotByUserId(Long userId)
+    {
+        return spotFavoriteMapper.selectFavoriteSpotByUserId(userId);
     }
 
     /**
