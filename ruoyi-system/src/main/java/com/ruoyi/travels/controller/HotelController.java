@@ -49,7 +49,7 @@ public class HotelController extends BaseController
     /**
      * 随机获取一个酒店信息
      */
-    @PreAuthorize("@ss.hasPermi('hotel:hotel:query')")
+//    @PreAuthorize("@ss.hasPermi('hotel:hotel:query')")
     @GetMapping(value = "/randomHotel")
     public AjaxResult getRandomHotel()
     {

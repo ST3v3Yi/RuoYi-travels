@@ -221,7 +221,7 @@ public class RouteController extends BaseController
      *  5.路线攻略评分 —— 之间将上述权重乘以相应平均分
      *
      */
-    @PreAuthorize("@ss.hasPermi('route:route:query')")
+//    @PreAuthorize("@ss.hasPermi('route:route:query')")
     @GetMapping(value = "/home/route")
     public AjaxResult getHomeRoute() {
         // 查询所有待推荐路线

@@ -41,7 +41,7 @@ public class SpotController extends BaseController
     /**
      * 查询景区列表
      */
-    @PreAuthorize("@ss.hasPermi('spot:spot:list')")
+//    @PreAuthorize("@ss.hasPermi('spot:spot:list')")
     @GetMapping("/list")
     public TableDataInfo list(Spot spot)
     {
@@ -61,9 +61,9 @@ public class SpotController extends BaseController
     }
 
     /**
-     * 获取随机两个景区
+     * 获取随机1个景区
      */
-    @PreAuthorize("@ss.hasPermi('spot:spot:query')")
+//    @PreAuthorize("@ss.hasPermi('spot:spot:query')")
     @GetMapping(value = "/randomSpot")
     public AjaxResult getRandomSpot()
     {
