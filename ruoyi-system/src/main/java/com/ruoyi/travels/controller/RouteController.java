@@ -152,7 +152,9 @@ public class RouteController extends BaseController
         tagList.addAll(spotName);
         tagList.addAll(hotelName);
         Long id = routeService.selectMAXId() + 1;
+        System.out.println("id是" + id);
         route.setId(id);
+        System.out.println(route.getId());
         for (String tag : tagList) {
             if (route.getContent().contains(tag)) {
                 RouteTag routeTag = new RouteTag();
