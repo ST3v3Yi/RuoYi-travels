@@ -36,9 +36,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="status"    column="status"    />
         <result property="price"    column="price"    />
+        <result property="hotelId"    column="hotel_id"    />
+        <result property="roomId"    column="room_id"    />
         <result property="hotelName"    column="hotel_name"    />
         <result property="coverImg"    column="cover_img"    />
         <result property="roomName"    column="room_name"    />
+        <result property="isCommented"    column="is_commented"    />
     </resultMap>
 
     <sql id="selectHotelOrdersVo">
@@ -59,12 +62,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectHotelOrdersByUserId" parameterType="Long" resultMap="UserOrdersResult">
-        SELECT ho.id, ho.user_name, ho.email, ho.telephone, ho.room_number, ho.from_date, ho.to_date, ho.arrival_time, ho.`status`, ho.price,
-               h.hotel_name, h.cover_img,
-               hr.room_name
+        SELECT
+            ho.id, ho.user_name, ho.email, ho.telephone, ho.room_number, ho.from_date, ho.to_date, ho.arrival_time, ho.`status`, ho.price, ho.create_time, ho.update_time, ho.hotel_id, ho.room_id,
+            h.hotel_name, h.cover_img,
+            hr.room_name,
+            CASE WHEN EXISTS(
+                    SELECT 1
+                    FROM tb_hotel_comments hc
+                    WHERE hc.order_id = ho.id
+                )
+                     THEN
+                     1
+                 ELSE
+                     0
+                END AS is_commented
         FROM tb_hotel_orders ho
-                 INNER JOIN tb_hotel h ON ho.hotel_id = h.id
-                 INNER JOIN tb_hotel_rooms hr ON ho.room_id = hr.id
+                 INNER JOIN tb_hotel h
+                            ON ho.hotel_id = h.id
+                 INNER JOIN tb_hotel_rooms hr
+                            ON ho.room_id = hr.id
         WHERE ho.user_id = #{userId}
     </select>
         

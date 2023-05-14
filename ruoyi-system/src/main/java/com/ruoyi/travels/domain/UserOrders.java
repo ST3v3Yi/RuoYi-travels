@@ -58,6 +58,14 @@ public class UserOrders extends BaseEntity
     @Excel(name = "订单价格")
     private BigDecimal price;
 
+    /** 酒店ID */
+    @Excel(name = "酒店ID")
+    private Long hotelId;
+
+    /** 房间ID */
+    @Excel(name = "房间ID")
+    private Long roomId;
+
     /** 酒店名称 */
     @Excel(name = "酒店名称")
     private String hotelName;
@@ -69,6 +77,10 @@ public class UserOrders extends BaseEntity
     /** 房间名称 */
     @Excel(name = "房间名称")
     private String roomName;
+
+    /** 评论状态 */
+    @Excel(name = "评论状态")
+    private Boolean isCommented;
 
     public void setId(Long id)
     {
@@ -160,6 +172,24 @@ public class UserOrders extends BaseEntity
     {
         return price;
     }
+    public void setHotelId(Long hotelId)
+    {
+        this.hotelId = hotelId;
+    }
+
+    public Long getHotelId()
+    {
+        return hotelId;
+    }
+    public void setRoomId(Long roomId)
+    {
+        this.roomId = roomId;
+    }
+
+    public Long getRoomId()
+    {
+        return roomId;
+    }
     public void setHotelName(String hotelName)
     {
         this.hotelName = hotelName;
@@ -187,6 +217,15 @@ public class UserOrders extends BaseEntity
     {
         return  roomName;
     }
+    public void setIsCommented(Boolean isCommented)
+    {
+        this.isCommented = isCommented;
+    }
+
+    public Boolean getIsCommented()
+    {
+        return isCommented;
+    }
 
     @Override
     public String toString() {
@@ -203,9 +242,12 @@ public class UserOrders extends BaseEntity
                 .append("updateTime", getUpdateTime())
                 .append("status", getStatus())
                 .append("price", getPrice())
+                .append("hotelId", getHotelId())
+                .append("roomId",getRoomId())
                 .append("hotelName", getHotelName())
                 .append("coverImg", getCoverImg())
                 .append("roomName", getRoomName())
+                .append("isCommented",getIsCommented())
                 .toString();
     }
 }
