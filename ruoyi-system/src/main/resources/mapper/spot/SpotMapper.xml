@@ -41,6 +41,12 @@
         where id = #{id}
     </select>
 
+    <select id="selectSpotIdBySpotName" parameterType="String" resultType="Long">
+        select id
+        from tb_spot
+        where spot_name = #{spotName}
+    </select>
+
     <insert id="insertSpot" parameterType="Spot" useGeneratedKeys="true" keyProperty="id">
         insert into tb_spot
         <trim prefix="(" suffix=")" suffixOverrides=",">

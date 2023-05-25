@@ -54,6 +54,15 @@ public class HotelServiceImpl implements IHotelService
     }
 
     /**
+     * 根据名称获取id
+     */
+    @Override
+    public Long selectHotelIdByHotelName(String hotelName)
+    {
+        return hotelMapper.selectHotelIdByHotelName(hotelName);
+    }
+
+    /**
      * 新增酒店管理
      * 
      * @param hotel 酒店管理

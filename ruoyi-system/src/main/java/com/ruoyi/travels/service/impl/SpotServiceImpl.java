@@ -45,6 +45,15 @@ public class SpotServiceImpl implements ISpotService
     }
 
     /**
+     * 根据名字获取id
+     */
+    @Override
+    public Long selectSpotIdBySpotName(String spotName)
+    {
+        return spotMapper.selectSpotIdBySpotName(spotName);
+    }
+
+    /**
      * 新增景区
      *
      * @param spot 景区

@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.travels.domain.HotelRoomCriteria;
 import org.junit.Test;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,6 +135,24 @@ public class HotelRoomsController extends BaseController
             }
         }
         System.out.println("Ids: " + Ids);
+        return success(Ids);
+    }
+
+    /**
+     * 获取可行的房间ids
+     */
+    @PostMapping("/roomFeasibility")
+    public AjaxResult getRoomIdsList(@RequestBody HotelRoomCriteria hotelRoomCriteria)
+    {
+        List<HotelRooms> allRooms = hotelRoomsService.selectHotelRoomsByHotelId(hotelRoomCriteria.getHotelId());
+        Long people = hotelRoomCriteria.getPeopleNumber();
+        Long rooms = hotelRoomCriteria.getRoomNumber();
+        List<Long> Ids = new ArrayList<>();
+        for (HotelRooms room : allRooms) {
+            if (room.getCounts() > rooms && room.getNumber() >= people/rooms) {
+                Ids.add(room.getId());
+            }
+        }
         return success(Ids);
     }
 

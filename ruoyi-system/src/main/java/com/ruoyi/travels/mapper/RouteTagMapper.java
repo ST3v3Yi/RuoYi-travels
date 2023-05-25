@@ -5,15 +5,15 @@ import com.ruoyi.travels.domain.RouteTag;
 
 /**
  * 路线TagMapper接口
- * 
+ *
  * @author Yifun
- * @date 2023-05-10
+ * @date 2023-05-25
  */
-public interface RouteTagMapper 
+public interface RouteTagMapper
 {
     /**
      * 查询路线Tag
-     * 
+     *
      * @param id 路线Tag主键
      * @return 路线Tag
      */
@@ -21,15 +21,20 @@ public interface RouteTagMapper
 
     /**
      * 查询路线Tag列表
-     * 
+     *
      * @param routeTag 路线Tag
      * @return 路线Tag集合
      */
     public List<RouteTag> selectRouteTagList(RouteTag routeTag);
 
     /**
+     * 获取Tags
+     */
+    public List<RouteTag> selectTagsByRouteId(Long routeId);
+
+    /**
      * 新增路线Tag
-     * 
+     *
      * @param routeTag 路线Tag
      * @return 结果
      */
@@ -37,7 +42,7 @@ public interface RouteTagMapper
 
     /**
      * 修改路线Tag
-     * 
+     *
      * @param routeTag 路线Tag
      * @return 结果
      */
@@ -45,7 +50,7 @@ public interface RouteTagMapper
 
     /**
      * 删除路线Tag
-     * 
+     *
      * @param id 路线Tag主键
      * @return 结果
      */
@@ -53,7 +58,7 @@ public interface RouteTagMapper
 
     /**
      * 批量删除路线Tag
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */

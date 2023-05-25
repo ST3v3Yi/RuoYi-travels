@@ -28,6 +28,11 @@ public interface SpotMapper
     public List<Spot> selectSpotList(Spot spot);
 
     /**
+     * 根据名字获取id
+     */
+    public Long selectSpotIdBySpotName(String spotName);
+
+    /**
      * 新增景区
      *
      * @param spot 景区

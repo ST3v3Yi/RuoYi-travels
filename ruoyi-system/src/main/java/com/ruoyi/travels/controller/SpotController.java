@@ -86,6 +86,13 @@ public class SpotController extends BaseController
     }
 
     /**
+     * 根据名称获取id
+     */
+    public Long getSpotId(String spotName) {
+        return spotService.selectSpotIdBySpotName(spotName);
+    }
+
+    /**
      * 导出景区列表
      */
     @PreAuthorize("@ss.hasPermi('spot:spot:export')")

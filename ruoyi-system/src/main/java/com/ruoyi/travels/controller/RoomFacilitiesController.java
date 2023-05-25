@@ -1,7 +1,10 @@
 package com.ruoyi.travels.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.travels.domain.RoomFacility;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,6 +70,15 @@ public class RoomFacilitiesController extends BaseController
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
         return success(roomFacilitiesService.selectRoomFacilitiesById(id));
+    }
+
+    /**
+     * 获取相应房间的设施信息
+     */
+    @GetMapping(value = "/roomId/{roomId}")
+    public AjaxResult getRoomFacilities(@PathVariable("roomId") Long roomId)
+    {
+        return success(roomFacilitiesService.selectRoomFacilitiesByRoomId(roomId));
     }
 
     /**

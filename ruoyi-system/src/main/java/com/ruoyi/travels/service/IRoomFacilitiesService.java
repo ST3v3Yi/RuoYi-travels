@@ -2,6 +2,7 @@ package com.ruoyi.travels.service;
 
 import java.util.List;
 import com.ruoyi.travels.domain.RoomFacilities;
+import com.ruoyi.travels.domain.RoomFacility;
 
 /**
  * 房间设施Service接口
@@ -26,6 +27,11 @@ public interface IRoomFacilitiesService
      * @return 房间设施集合
      */
     public List<RoomFacilities> selectRoomFacilitiesList(RoomFacilities roomFacilities);
+
+    /**
+     * 获取相应房间的设施信息
+     */
+    public List<RoomFacility> selectRoomFacilitiesByRoomId(Long roomId);
 
     /**
      * 新增房间设施

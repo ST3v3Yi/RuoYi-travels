@@ -11,6 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="isFree"    column="is_free"    />
     </resultMap>
 
+    <resultMap id="RoomFacilityResult" type="RoomFacility">
+        <result property="id"    column="id"    />
+        <result property="facilityId"    column="facility_id"    />
+        <result property="isFree"    column="is_free"    />
+        <result property="category"    column="category"    />
+        <result property="description"    column="description"    />
+    </resultMap>
+
     <sql id="selectRoomFacilitiesVo">
         select id, room_id, facility_id, is_free from tb_room_facilities
     </sql>
@@ -26,6 +34,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectRoomFacilitiesById" parameterType="Long" resultMap="RoomFacilitiesResult">
         <include refid="selectRoomFacilitiesVo"/>
         where id = #{id}
+    </select>
+
+    <select id="selectRoomFacilitiesByRoomId" parameterType="Long" resultMap="RoomFacilityResult">
+        SELECT rf.id, facility_id, is_free, category, description
+        FROM tb_room_facilities rf
+                 JOIN tb_facilities f ON rf.facility_id = f.id
+        WHERE rf.room_id = #{roomId}
     </select>
         
     <insert id="insertRoomFacilities" parameterType="RoomFacilities" useGeneratedKeys="true" keyProperty="id">

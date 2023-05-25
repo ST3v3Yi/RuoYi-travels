@@ -1,7 +1,14 @@
 package com.ruoyi.travels.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.travels.domain.Hotel;
+import com.ruoyi.travels.domain.Spot;
+import com.ruoyi.travels.service.IHotelService;
+import com.ruoyi.travels.service.ISpotService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +40,12 @@ public class RouteTagController extends BaseController
 {
     @Autowired
     private IRouteTagService routeTagService;
+
+    @Autowired
+    private ISpotService spotService;
+
+    @Autowired
+    private IHotelService hotelService;
 
     /**
      * 查询路线Tag列表
@@ -67,6 +80,30 @@ public class RouteTagController extends BaseController
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
         return success(routeTagService.selectRouteTagById(id));
+    }
+
+    /**
+     * 获取路线Tags
+     */
+    @GetMapping(value = "/tags/{routeId}")
+    public AjaxResult getTags(@PathVariable("routeId") Long routeId)
+    {
+        // 1. 根据routeId搜索其名下所有Tags
+        List<RouteTag> tags = new ArrayList<>();
+        tags = routeTagService.selectTagsByRouteId(routeId);
+        // 2. 根据Tags中的type分别从Spot和Hotel中获取相应的信息
+        List<Spot> spotTags = tags.stream()
+                .filter(tag -> tag.getType() == 0)
+                .map(tag -> spotService.selectSpotById(tag.getTargetId()))
+                .collect(Collectors.toList());
+        List<Hotel> hotelTags = tags.stream()
+                .filter(tag -> tag.getType() == 1)
+                .map(tag -> hotelService.selectHotelById(tag.getTargetId()))
+                .collect(Collectors.toList());
+        List<Object> mergedTags = new ArrayList<>(spotTags.size() + hotelTags.size());
+        mergedTags.addAll(spotTags);
+        mergedTags.addAll(hotelTags);
+        return success(mergedTags);
     }
 
     /**

@@ -148,18 +148,25 @@ public class RouteController extends BaseController
         List<String> spotName = spotList.stream().map(Spot::getSpotName).collect(Collectors.toList());
         List<Hotel> hotelList = hotelService.selectHotelList(null);
         List<String> hotelName = hotelList.stream().map(Hotel::getHotelName).collect(Collectors.toList());
-        List<String> tagList = new ArrayList<>();
-        tagList.addAll(spotName);
-        tagList.addAll(hotelName);
         Long id = routeService.selectMAXId() + 1;
-        System.out.println("id是" + id);
         route.setId(id);
-        System.out.println(route.getId());
-        for (String tag : tagList) {
+        for (String tag : spotName) {
             if (route.getContent().contains(tag)) {
                 RouteTag routeTag = new RouteTag();
-                routeTag.setRouteId(route.getId());
+                routeTag.setRouteId(id);
                 routeTag.setTag(tag);
+                routeTag.setType(0L);
+                routeTag.setTargetId(spotService.selectSpotIdBySpotName(tag));
+                routeTagService.insertRouteTag(routeTag);
+            }
+        }
+        for (String tag : hotelName) {
+            if (route.getContent().contains(tag)) {
+                RouteTag routeTag = new RouteTag();
+                routeTag.setRouteId(id);
+                routeTag.setTag(tag);
+                routeTag.setType(1L);
+                routeTag.setTargetId(hotelService.selectHotelIdByHotelName(tag));
                 routeTagService.insertRouteTag(routeTag);
             }
         }
@@ -220,7 +227,7 @@ public class RouteController extends BaseController
      *  2.评论    权重3
      *  3.回复    权重1
      *  4.发表时间 —— 距今10天内100% / 距今30天内80% / 距今60天内30% / 距今90天内10% / 距今90天以上2%
-     *  5.路线攻略评分 —— 之间将上述权重乘以相应平均分
+     *  5.路线攻略评分 —— 之间将上述权重乘以相应rating平均分
      *
      */
 //    @PreAuthorize("@ss.hasPermi('route:route:query')")

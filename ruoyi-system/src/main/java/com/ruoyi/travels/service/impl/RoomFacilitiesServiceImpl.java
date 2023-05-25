@@ -1,6 +1,8 @@
 package com.ruoyi.travels.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.travels.domain.RoomFacility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.travels.mapper.RoomFacilitiesMapper;
@@ -41,6 +43,15 @@ public class RoomFacilitiesServiceImpl implements IRoomFacilitiesService
     public List<RoomFacilities> selectRoomFacilitiesList(RoomFacilities roomFacilities)
     {
         return roomFacilitiesMapper.selectRoomFacilitiesList(roomFacilities);
+    }
+
+    /**
+     * 获取相应房间的设施信息
+     */
+    @Override
+    public List<RoomFacility> selectRoomFacilitiesByRoomId(Long roomId)
+    {
+        return roomFacilitiesMapper.selectRoomFacilitiesByRoomId(roomId);
     }
 
     /**

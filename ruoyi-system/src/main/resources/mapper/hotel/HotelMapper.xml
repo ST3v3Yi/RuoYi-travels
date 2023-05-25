@@ -42,6 +42,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectRandomHotel" resultMap="HotelResult">
         SELECT * FROM `tb_hotel` ORDER BY RAND() LIMIT 1;
     </select>
+
+    <select id="selectHotelIdByHotelName" parameterType="String" resultType="Long">
+        select id
+        from tb_hotel
+        where hotel_name = #{hotelName}
+    </select>
         
     <insert id="insertHotel" parameterType="Hotel" useGeneratedKeys="true" keyProperty="id">
         insert into tb_hotel

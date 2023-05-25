@@ -2,6 +2,7 @@ package com.ruoyi.travels.mapper;
 
 import java.util.List;
 import com.ruoyi.travels.domain.RoomFacilities;
+import com.ruoyi.travels.domain.RoomFacility;
 
 /**
  * 房间设施Mapper接口
@@ -26,6 +27,12 @@ public interface RoomFacilitiesMapper
      * @return 房间设施集合
      */
     public List<RoomFacilities> selectRoomFacilitiesList(RoomFacilities roomFacilities);
+
+    /**
+     * 获取相应房间的设施信息
+     * @return
+     */
+    public List<RoomFacility> selectRoomFacilitiesByRoomId(Long roomId);
 
     /**
      * 新增房间设施

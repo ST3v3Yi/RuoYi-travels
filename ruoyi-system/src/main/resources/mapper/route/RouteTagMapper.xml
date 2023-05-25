@@ -1,42 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.travels.mapper.RouteTagMapper">
-    
+
     <resultMap type="RouteTag" id="RouteTagResult">
         <result property="id"    column="id"    />
         <result property="routeId"    column="route_id"    />
         <result property="tag"    column="tag"    />
+        <result property="type"    column="type"    />
+        <result property="targetId"    column="target_id"    />
     </resultMap>
 
     <sql id="selectRouteTagVo">
-        select id, route_id, tag from tb_route_tag
+        select id, route_id, tag, type, target_id from tb_route_tag
     </sql>
 
     <select id="selectRouteTagList" parameterType="RouteTag" resultMap="RouteTagResult">
         <include refid="selectRouteTagVo"/>
-        <where>  
+        <where>
             <if test="routeId != null "> and route_id = #{routeId}</if>
             <if test="tag != null  and tag != ''"> and tag = #{tag}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="targetId != null "> and target_id = #{targetId}</if>
         </where>
     </select>
-    
+
     <select id="selectRouteTagById" parameterType="Long" resultMap="RouteTagResult">
         <include refid="selectRouteTagVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="selectTagsByRouteId" parameterType="Long" resultMap="RouteTagResult">
+        SELECT *
+        FROM tb_route_tag
+        WHERE route_id = #{routeId}
+        GROUP BY route_id, tag
+        HAVING COUNT(*) > 0
+    </select>
+
     <insert id="insertRouteTag" parameterType="RouteTag" useGeneratedKeys="true" keyProperty="id">
         insert into tb_route_tag
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="routeId != null">route_id,</if>
             <if test="tag != null">tag,</if>
-         </trim>
+            <if test="type != null">type,</if>
+            <if test="targetId != null">target_id,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="routeId != null">#{routeId},</if>
             <if test="tag != null">#{tag},</if>
-         </trim>
+            <if test="type != null">#{type},</if>
+            <if test="targetId != null">#{targetId},</if>
+        </trim>
     </insert>
 
     <update id="updateRouteTag" parameterType="RouteTag">
@@ -44,6 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="routeId != null">route_id = #{routeId},</if>
             <if test="tag != null">tag = #{tag},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="targetId != null">target_id = #{targetId},</if>
         </trim>
         where id = #{id}
     </update>
@@ -53,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteRouteTagByIds" parameterType="String">
-        delete from tb_route_tag where id in 
+        delete from tb_route_tag where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

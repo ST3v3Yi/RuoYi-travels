@@ -33,6 +33,11 @@ public interface IHotelService
     public Hotel selectRandomHotel();
 
     /**
+     * 根据名称获取id
+     */
+    public Long selectHotelIdByHotelName(String hotelName);
+
+    /**
      * 新增酒店管理
      * 
      * @param hotel 酒店管理

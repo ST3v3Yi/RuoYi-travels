@@ -9,19 +9,19 @@ import com.ruoyi.travels.service.IRouteTagService;
 
 /**
  * 路线TagService业务层处理
- * 
+ *
  * @author Yifun
- * @date 2023-05-10
+ * @date 2023-05-25
  */
 @Service
-public class RouteTagServiceImpl implements IRouteTagService 
+public class RouteTagServiceImpl implements IRouteTagService
 {
     @Autowired
     private RouteTagMapper routeTagMapper;
 
     /**
      * 查询路线Tag
-     * 
+     *
      * @param id 路线Tag主键
      * @return 路线Tag
      */
@@ -33,7 +33,7 @@ public class RouteTagServiceImpl implements IRouteTagService
 
     /**
      * 查询路线Tag列表
-     * 
+     *
      * @param routeTag 路线Tag
      * @return 路线Tag
      */
@@ -44,8 +44,17 @@ public class RouteTagServiceImpl implements IRouteTagService
     }
 
     /**
+     * 获取Tags
+     */
+    @Override
+    public List<RouteTag> selectTagsByRouteId(Long routeId)
+    {
+        return routeTagMapper.selectTagsByRouteId(routeId);
+    }
+
+    /**
      * 新增路线Tag
-     * 
+     *
      * @param routeTag 路线Tag
      * @return 结果
      */
@@ -57,7 +66,7 @@ public class RouteTagServiceImpl implements IRouteTagService
 
     /**
      * 修改路线Tag
-     * 
+     *
      * @param routeTag 路线Tag
      * @return 结果
      */
@@ -69,7 +78,7 @@ public class RouteTagServiceImpl implements IRouteTagService
 
     /**
      * 批量删除路线Tag
-     * 
+     *
      * @param ids 需要删除的路线Tag主键
      * @return 结果
      */
@@ -81,7 +90,7 @@ public class RouteTagServiceImpl implements IRouteTagService
 
     /**
      * 删除路线Tag信息
-     * 
+     *
      * @param id 路线Tag主键
      * @return 结果
      */
